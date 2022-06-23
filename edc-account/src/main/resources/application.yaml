@@ -12,6 +12,10 @@ spring:
     username: root
     password: mysqljiushiyigedashab.+-*
     url: jdbc:mysql://43.142.160.234:3306/edccloud?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+  redis:
+    host: 43.142.160.234
+    port: 6379
+    password: redis2jiu41ge+da+sb
 
   # 注册中心
   cloud:
@@ -20,8 +24,11 @@ spring:
       username: nacos
       password: nacoshaishikeyide0
 
+
+
+
 # mybatis-plus
-mybatis-plus:
-  configuration:
-    #    关闭驼峰转换
-    map-underscore-to-camel-case: false
+#mybatis-plus:
+#  configuration:
+#    #    关闭驼峰转换
+#    map-underscore-to-camel-case: false
