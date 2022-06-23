@@ -8,6 +8,7 @@
     <module>edc-basic</module>
     <module>edc-consumer</module>
     <module>edc-account</module>
+    <module>edc-common</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>

@@ -1,0 +1,15 @@
+server:
+  port: 8093
+
+
+spring:
+#  redis配置
+  redis:
+    host: 43.142.160.234
+    port: 6379
+    password: redis2jiu41ge+da+sb
+    lettuce:
+      pool:
+        max-active: 8
+        min-idle: 2
+        max-wait: 100
