@@ -6,5 +6,5 @@ import java.io.Serializable;
 
 @Data
 public abstract class BaseTable implements Serializable {
-    private String id;
+    private Long id;
 }
