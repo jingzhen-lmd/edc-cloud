@@ -1,6 +1,6 @@
 package com.edcccd.account.configure;
 
-import com.edcccd.account.interceptor.LoginInterceptor;
+import com.edcccd.account.common.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
