@@ -33,8 +33,8 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.setStatus(401);
             return false;
         }
-        if (token.startsWith("Bearer")){
-            token=token.substring(7);
+        if (token.startsWith("Bearer")) {
+            token = token.substring(7);
         }
 
         // 从redis中取出数据
@@ -61,6 +61,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+        UserHolder.removeUser();
     }
 }

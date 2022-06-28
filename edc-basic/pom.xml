@@ -10,6 +10,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>edc-basic</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+    <module>basic-api</module>
+    <module>basic-service</module>
+  </modules>
 
   <properties>
     <maven.compiler.source>8</maven.compiler.source>
@@ -62,6 +67,19 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
     </dependency>
+
+<!--  子模块依赖，作为平台连接  -->
+<!--    <dependency>-->
+<!--      <groupId>com.example</groupId>-->
+<!--      <artifactId>basic-service</artifactId>-->
+<!--      <version>0.0.1-SNAPSHOT</version>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>com.example</groupId>-->
+<!--      <artifactId>basic-api</artifactId>-->
+<!--      <version>0.0.1-SNAPSHOT</version>-->
+<!--    </dependency>-->
+
   </dependencies>
 
 </project>
