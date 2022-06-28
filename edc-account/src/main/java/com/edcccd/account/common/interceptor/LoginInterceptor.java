@@ -1,4 +1,4 @@
-package com.edcccd.account.interceptor;
+package com.edcccd.account.common.interceptor;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;

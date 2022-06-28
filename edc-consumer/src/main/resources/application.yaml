@@ -1,0 +1,42 @@
+server:
+  port: 8094
+
+spring:
+  # 服务名称
+  application:
+    name: consumerservice
+
+  # 数据源配置
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: mysqljiushiyigedashab.+-*
+#    url: jdbc:mysql://43.142.160.234:3306/edccloud?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+
+
+# 远程调用配置
+feign:
+  client:
+    config:
+      default: # default全局的配置
+        loggerLevel: none # BASIC:基本的请求和响应信息
+  httpclient:
+    enabled: true
+
+#  # 注册中心
+#  cloud:
+#    nacos:
+#      server-addr: http://43.142.160.234:8848
+#      username: nacos
+#      password: nacoshaishikeyide0
+
+# mybatis-plus
+#mybatis-plus:
+#  configuration:
+    #    关闭驼峰转换
+#    map-underscore-to-camel-case: true
+
+#logging:
+#  level:
+    # 下面路径为feign的全路径地址，可自定义记录某个类/包的日志级别
+#    com.edcccd.basic.feign: debug

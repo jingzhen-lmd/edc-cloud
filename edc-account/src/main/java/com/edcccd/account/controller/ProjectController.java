@@ -1,7 +1,7 @@
 package com.edcccd.account.controller;
 
 import com.edcccd.account.common.Result;
-import com.edcccd.account.interceptor.UserHolder;
+import com.edcccd.account.common.interceptor.UserHolder;
 import com.edcccd.account.pojo.Project;
 import com.edcccd.account.pojo.User;
 import com.edcccd.account.service.ProjectService;

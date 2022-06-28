@@ -1,4 +1,4 @@
-package com.edcccd.basic.pojo;
+package com.edcccd.consumer.pojo;
 
 import lombok.Data;
 

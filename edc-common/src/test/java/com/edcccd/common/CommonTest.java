@@ -1,12 +1,16 @@
 package com.edcccd.common;
 
+import com.edcccd.common.pojo.Product;
+import com.edcccd.common.service.RedisLock;
 import com.edcccd.common.util.IdGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @SpringBootTest
 public class CommonTest {
@@ -23,10 +27,52 @@ public class CommonTest {
     System.out.println(template.opsForValue().get("chushi"));
   }
 
+  @Autowired
+  RedisLock redisLock;
+
   @Test
-  public void test2() {
-    for (int i = 0; i < 100; i++) {
-      long order = wholeID.generateId("order");
+  public void test2() throws InterruptedException {
+    Product product = new Product();
+    product.setNum(10);
+
+    AtomicInteger sell = new AtomicInteger();
+    CountDownLatch latch = new CountDownLatch(400);
+
+    for (int i = 0; i < 400; i++) {
+      Thread thread = new Thread(() -> {
+        if (product.getNum() > 0) {
+          String key = "商品:" + product.getNum();
+
+          if (redisLock.getLock(key)) {
+            System.out.println("拿到锁了" + key);
+            int num = product.getNum() - 1;
+//            try {
+//              Thread.sleep(2);
+//            } catch (InterruptedException e) {
+//              e.printStackTrace();
+//            }
+            sell.getAndIncrement();
+            product.setNum(num);
+
+            System.out.println("还回去了" + key);
+            redisLock.unlock(key);
+          }
+        }
+        latch.countDown();
+      });
+      thread.start();
     }
+
+    latch.await();
+//    Thread.sleep(2000);
+    System.out.println("最后num：" + product.getNum());
+    System.out.println("maile：" + sell);
+  }
+
+  @Test
+  public void test04() {
+//    redisLock.getLock("商品");
+//    boolean sp = redisLock.unlock("商品");
+//    System.out.println(sp);
   }
 }
