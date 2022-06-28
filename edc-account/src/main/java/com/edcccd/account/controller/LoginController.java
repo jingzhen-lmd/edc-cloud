@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 登录模块
  */
+@RequestMapping("account/login")
 @RestController
 public class LoginController {
 
@@ -22,7 +23,7 @@ public class LoginController {
      *
      * @param user 用户
      */
-    @PostMapping("/login")
+    @PostMapping
     public Result<String> login(HttpServletRequest request, @RequestBody User user) {
         return service.login(request, user);
     }

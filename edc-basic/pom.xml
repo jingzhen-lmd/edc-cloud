@@ -46,6 +46,13 @@
       <artifactId>feign-httpclient</artifactId>
     </dependency>
 
+    <!--    huTool-->
+    <dependency>
+      <groupId>cn.hutool</groupId>
+      <artifactId>hutool-all</artifactId>
+      <version>${hutool.version}</version>
+    </dependency>
+
     <!--    数据库连接-->
     <dependency>
       <groupId>com.baomidou</groupId>

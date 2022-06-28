@@ -25,7 +25,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         this.template = template;
     }
 
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 获取token
@@ -34,6 +33,10 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.setStatus(401);
             return false;
         }
+        if (token.startsWith("Bearer")){
+            token=token.substring(7);
+        }
+
         // 从redis中取出数据
         String user2Json = template.opsForValue().get(LOGIN_TOKEN + token);
 

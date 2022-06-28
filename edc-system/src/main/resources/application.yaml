@@ -1,0 +1,16 @@
+server:
+  port: 8093
+
+spring:
+  # 服务名称
+  application:
+    name: systemservice
+
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: mysqljiushiyigedashab.+-*
+    url: jdbc:mysql://43.142.160.234:3306/edccloud?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+
+

@@ -9,6 +9,7 @@
     <module>edc-consumer</module>
     <module>edc-account</module>
     <module>edc-common</module>
+      <module>edc-system</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -61,12 +62,12 @@
   </dependencyManagement>
 
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
+<!--    <plugins>-->
+<!--      <plugin>-->
+<!--        <groupId>org.springframework.boot</groupId>-->
+<!--        <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--      </plugin>-->
+<!--    </plugins>-->
   </build>
 
 </project>

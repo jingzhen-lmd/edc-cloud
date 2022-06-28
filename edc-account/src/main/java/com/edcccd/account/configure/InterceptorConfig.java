@@ -20,9 +20,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(new LoginInterceptor(template))
                 .excludePathPatterns(
-                        "/login/**",
-                        "/getCheckCode",
-                        "/phoneLogin"
+                        "account/login/**"
                 );
     }
 }
