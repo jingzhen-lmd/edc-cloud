@@ -13,6 +13,18 @@ spring:
 #    password: mysqljiushiyigedashab.+-*
 #    url: jdbc:mysql://43.142.160.234:3306/edccloud?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
 
+  rabbitmq:
+    host: 43.142.160.234 # 主机名
+    port: 5672 # 端口
+    virtual-host: / # 虚拟主机
+    username: admin # 用户名
+    password: 123mydocker456 # 密码
+
+#    生产者配置
+    publisher-confirm-type: correlated # none不配置、simple同步、correlated异步
+    publisher-returns: true # 开启返回功能
+    template:
+      mandatory: true # 定义路由端的机制，true,则调用ReturnCallback。false直接丢弃消息
 
 # 远程调用配置
 feign:
