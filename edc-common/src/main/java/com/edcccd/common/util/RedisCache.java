@@ -39,15 +39,28 @@ public class RedisCache {
         return isSuccess != null && isSuccess;
     }
 
+    public boolean addCache(String pre, String value, long time, TimeUnit timeUnit) {
+        if (StrUtil.isBlank(pre))
+            return false;
+        Boolean isSuccess = template.opsForValue().setIfAbsent(pre, value, time, timeUnit);
+        return isSuccess != null && isSuccess;
+    }
+
     /**
-     * 对象缓存,默认30分钟过期
+     * 对象缓存(json),默认30分钟过期
      */
     public <T> void addCache(String pre, T value) {
         assert pre != null;
         assert value != null;
         String jsonStr = JSONUtil.toJsonStr(value);
-
         template.opsForValue().set(pre, jsonStr, 30, TimeUnit.MINUTES);
+    }
+
+    public <T> void addCache(String pre, T value, long time, TimeUnit timeUnit) {
+        assert pre != null;
+        assert value != null;
+        String jsonStr = JSONUtil.toJsonStr(value);
+        template.opsForValue().set(pre, jsonStr, time, timeUnit);
     }
 
     /**
