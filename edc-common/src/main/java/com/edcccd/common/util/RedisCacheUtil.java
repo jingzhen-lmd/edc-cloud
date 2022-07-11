@@ -16,10 +16,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 /**
- * redis缓存
+ * redis缓存工具类
  */
 @Component
-public class RedisCache {
+public class RedisCacheUtil {
 
     @Autowired
     private StringRedisTemplate template;
@@ -33,12 +33,20 @@ public class RedisCache {
     public boolean addCache(String pre, String value) {
         if (StrUtil.isBlank(pre))
             return false;
-
         Boolean isSuccess = template.opsForValue().setIfAbsent(pre, value, 30, TimeUnit.MINUTES);
 
         return isSuccess != null && isSuccess;
     }
 
+    /**
+     * 字符串缓存,自定义时间
+     *
+     * @param pre      前缀
+     * @param value    data
+     * @param time     time
+     * @param timeUnit timeUnit
+     * @return isSuccess
+     */
     public boolean addCache(String pre, String value, long time, TimeUnit timeUnit) {
         if (StrUtil.isBlank(pre))
             return false;
@@ -47,7 +55,7 @@ public class RedisCache {
     }
 
     /**
-     * 对象缓存(json),默认30分钟过期
+     * 对象缓存(toJson),默认30分钟过期
      */
     public <T> void addCache(String pre, T value) {
         assert pre != null;
@@ -56,6 +64,9 @@ public class RedisCache {
         template.opsForValue().set(pre, jsonStr, 30, TimeUnit.MINUTES);
     }
 
+    /**
+     * 对象缓存(toJson),自定义时间
+     */
     public <T> void addCache(String pre, T value, long time, TimeUnit timeUnit) {
         assert pre != null;
         assert value != null;
@@ -77,7 +88,7 @@ public class RedisCache {
     }
 
     /**
-     * 通过反射将value的key、value保存到redis
+     * 对象缓存为map
      */
     public void addMap(String pre, Object value) {
         if (StrUtil.isBlank(pre) || value == null)
@@ -85,23 +96,22 @@ public class RedisCache {
 
         Map<String, Object> redisDataMap = new HashMap<>();
 
-        Arrays.stream(value.getClass().getDeclaredFields())
-                .forEach(field -> {
-                    field.setAccessible(true);
-                    Object o = "";
-                    try {
-                        o = field.get(value);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                    redisDataMap.put(field.getName(), o);
-                });
+        Arrays.stream(value.getClass().getDeclaredFields()).forEach(field -> {
+            field.setAccessible(true);
+            Object o = "";
+            try {
+                o = field.get(value);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            redisDataMap.put(field.getName(), o);
+        });
 
         redisTemplate.opsForHash().putAll(pre, redisDataMap);
     }
 
     /**
-     * 查询对象,并反序列化为指定雷系,缓存空值来解决缓存穿透问题
+     * 查询对象,并反序列化为指定类,缓存空值来解决缓存穿透问题
      */
     public <R> R getByCashThrow(String key, Class<R> valueClass) {
         if (StrUtil.isBlank(key)) {
@@ -127,32 +137,28 @@ public class RedisCache {
         long time = 30;
         TimeUnit unit = TimeUnit.MINUTES;
 
-//        获取redis对象，查看是否过期
+        //        获取redis对象，查看是否过期
         String jsonData = template.opsForValue().get(key);
         if (StrUtil.isNotBlank(jsonData)) {
             //        内部变量只能是JSONObject，无法转换
             RedisData<JSONObject> result = JSONUtil.toBean(jsonData, RedisData.class);
             LocalDateTime dateTime = result.getDate();
-//            查询对象没有过期则直接返回
+            //            查询对象没有过期则直接返回
             if (dateTime.isAfter(LocalDateTime.now())) {
                 return JSONUtil.toBean(result.getObject(), valueClass);
             }
         }
-//       查不到或者key过期了,需要通过数据库查一次
+        //       查不到或者key过期了,需要通过数据库查一次
         R apply = sql.apply(id);
 
-//        查不到,缓存放数据,5秒
+        //        查不到,缓存放数据,5秒
         if (apply == null) {
             template.opsForValue().setIfAbsent(key, "", 5, TimeUnit.SECONDS);
             return null;
         }
-//        查到了，写缓存,返回
+        //        查到了，写缓存,返回
         template.opsForValue().set(key, JSONUtil.toJsonStr(apply), time, unit);
         return apply;
-    }
-
-    public void update() {
-        System.out.println("我去更新了");
     }
 
     /**
