@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 作品点赞
+ * 作品点赞,使用sortSet实现
+ * 这里用户是直接写在列表中的，理论上应该直接从session中拿
+ *
  */
 @RestController
 @RequestMapping("Fans")
@@ -47,7 +49,6 @@ public class FansController {
      */
     @GetMapping("fans")
     public List<User> listFans(@RequestParam("id") String id) {
-
         return service.listFans(id);
     }
 

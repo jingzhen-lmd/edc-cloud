@@ -10,9 +10,11 @@ import com.edcccd.demand.pojo.Video;
 import com.edcccd.demand.service.FansService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisZSetCommands;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -20,70 +22,67 @@ import java.util.Set;
 @Component
 public class FansServiceImpl implements FansService {
 
-  @Autowired
-  StringRedisTemplate template;
-  @Autowired
-  VideoMapper videoMapper;
-  @Autowired
-  UserFeign userFeign;
+    @Autowired
+    StringRedisTemplate template;
+    @Autowired
+    VideoMapper videoMapper;
+    @Autowired
+    UserFeign userFeign;
 
 
-  @Override
-  public boolean isLike(String user, String id) {
-    assert StrUtil.isNotBlank(user);
-    assert StrUtil.isNotBlank(id);
+    @Override
+    public boolean isLike(String user, String id) {
+        assert StrUtil.isNotBlank(user);
+        assert StrUtil.isNotBlank(id);
 
-    String key = MyUtil.getDateKey(Const.VIDEO_KEY, id);
-    Boolean isNumber = template.opsForSet().isMember(key, user);
+        String key = MyUtil.getDateKey(Const.VIDEO_KEY, id);
+        Double score = template.opsForZSet().score(key, user);
 
-    assert isNumber != null;
-    return isNumber;
-  }
-
-
-  @Override
-  public boolean like(String user, String id) {
-    assert StrUtil.isNotBlank(user);
-    assert StrUtil.isNotBlank(id);
-    boolean result = false;
-
-    Video video = videoMapper.selectById(id);
-    if (video == null) {
-      log.warn("视频不存在,访问用户{}，访问video{}", user, id);
-      return result;
+        return score != null;
     }
 
-    String key = MyUtil.getDateKey(Const.VIDEO_KEY, id);
-    Boolean isNumber = template.opsForSet().isMember(key, user);
-    assert isNumber != null;
 
-    //  判断当前用户是否点赞
-    if (isNumber) {
-      //    点赞则取消
-      template.opsForSet().remove(key, user);
-      video.setFansNum(video.getFansNum() - 1);
-      result = false;
-    } else {
-      //    没点则点赞
-      template.opsForSet().add(key, user);
-      video.setFansNum(video.getFansNum() + 1);
-      result = true;
+    @Override
+    public boolean like(String user, String id) {
+        assert StrUtil.isNotBlank(user);
+        assert StrUtil.isNotBlank(id);
+        boolean result = false;
+
+        Video video = videoMapper.selectById(id);
+        if (video == null) {
+            log.warn("视频不存在,访问用户{}，访问video{}", user, id);
+            return result;
+        }
+
+        String key = MyUtil.getDateKey(Const.VIDEO_KEY, id);
+        Double score = template.opsForZSet().score(key, user);
+
+        //  判断当前用户是否点赞
+        if (score != null) {
+            //    点赞则取消
+            template.opsForZSet().remove(key, user);
+            video.setFansNum(video.getFansNum() - 1);
+            result = false;
+        } else {
+            //    没点则点赞
+            template.opsForZSet().add(key, user, System.currentTimeMillis());
+            video.setFansNum(video.getFansNum() + 1);
+            result = true;
+        }
+        //     数据库对应变化
+        videoMapper.updateById(video);
+        return result;
     }
-    //     数据库对应变化
-    videoMapper.updateById(video);
-    return result;
-  }
 
-  @Override
-  public List<User> listFans(String id) {
-    assert StrUtil.isNotBlank(id);
+    @Override
+    public List<User> listFans(String id) {
+        assert StrUtil.isNotBlank(id);
 
-    String key = MyUtil.getDateKey(Const.VIDEO_KEY, id);
-    Set<String> members = template.opsForSet().members(key);
-
-//    远程调用集合查询用户
-    List<User> users = userFeign.listUser();
-
-    return users;
-  }
+        String key = MyUtil.getDateKey(Const.VIDEO_KEY, id);
+        Set<String> members = template.opsForZSet().rangeByLex(key, new RedisZSetCommands.Range());
+        if (members==null){
+            return new ArrayList<>();
+        }
+        return userFeign.listUser(new ArrayList<>(members));
+    }
 }

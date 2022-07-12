@@ -14,10 +14,10 @@ public interface UserFeign {
   @GetMapping("hello")
   String hello();
 
-  @GetMapping("user")
+  @GetMapping("users")
   List<User> listUser();
 
-  @GetMapping("users")
+  @GetMapping("users/ids")
   List<User> listUser(List<String> ids);
 
   @GetMapping("user/{id}")

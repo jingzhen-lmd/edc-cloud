@@ -3,14 +3,7 @@ package com.edcccd.account.controller;
 import com.edcccd.account.mapper.UserMapper;
 import com.edcccd.account.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,14 +19,14 @@ public class UserController {
         return "hello";
     }
 
-    @GetMapping("user")
+    @GetMapping("users")
     public List<User> listUser() {
         return mapper.selectList(null);
     }
 
-    @GetMapping("users")
-    public List<User> listUser(List<String> ids);{
-
+    @GetMapping("users/ids")
+    public List<User> listUser(@RequestBody List<String> idList) {
+        return mapper.selectBatchIds(idList);
     }
 
     @GetMapping("user/{id}")
