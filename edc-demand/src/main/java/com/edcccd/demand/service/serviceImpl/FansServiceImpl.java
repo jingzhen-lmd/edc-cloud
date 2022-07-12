@@ -1,8 +1,10 @@
 package com.edcccd.demand.service.serviceImpl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.edcccd.basic.api.feign.UserFeign;
 import com.edcccd.basic.api.pojo.User;
+import com.edcccd.basic.api.pojo.UserDTO;
 import com.edcccd.demand.command.Const;
 import com.edcccd.demand.command.MyUtil;
 import com.edcccd.demand.mapper.VideoMapper;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -80,9 +83,24 @@ public class FansServiceImpl implements FansService {
 
         String key = MyUtil.getDateKey(Const.VIDEO_KEY, id);
         Set<String> members = template.opsForZSet().rangeByLex(key, new RedisZSetCommands.Range());
-        if (members==null){
+        if (members == null) {
             return new ArrayList<>();
         }
         return userFeign.listUser(new ArrayList<>(members));
+    }
+
+    @Override
+    public List<UserDTO> listFans(String id, int num) {
+        assert StrUtil.isNotBlank(id);
+
+        String key = MyUtil.getDateKey(Const.VIDEO_KEY, id);
+        Set<String> members = template.opsForZSet().range(key, 0, num);
+        if (members == null) {
+            return new ArrayList<>();
+        }
+        List<UserDTO> userDTOS = userFeign.listUser(new ArrayList<>(members)).stream()
+                                          .map(user -> BeanUtil.copyProperties(user, UserDTO.class))
+                                          .collect(Collectors.toList());
+        return userDTOS;
     }
 }

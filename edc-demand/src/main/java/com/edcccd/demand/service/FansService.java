@@ -1,6 +1,7 @@
 package com.edcccd.demand.service;
 
 import com.edcccd.basic.api.pojo.User;
+import com.edcccd.basic.api.pojo.UserDTO;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public interface FansService {
     /**
      * 查询是否点赞
+     *
      * @param user
      * @param id
      * @return
@@ -18,6 +20,7 @@ public interface FansService {
 
     /**
      * 点赞
+     *
      * @param user
      * @param id
      * @return
@@ -26,8 +29,17 @@ public interface FansService {
 
     /**
      * 查询作品的所有点赞用户
+     *
      * @param id
      * @return
      */
     List<User> listFans(String id);
+
+    /**
+     * 查询作品的前n个点赞用户，时间戳排序
+     *
+     * @param id
+     * @return
+     */
+    List<UserDTO> listFans(String id, int num);
 }

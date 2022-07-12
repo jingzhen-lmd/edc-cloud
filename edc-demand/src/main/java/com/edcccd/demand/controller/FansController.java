@@ -1,6 +1,7 @@
 package com.edcccd.demand.controller;
 
 import com.edcccd.basic.api.pojo.User;
+import com.edcccd.basic.api.pojo.UserDTO;
 import com.edcccd.demand.pojo.Video;
 import com.edcccd.demand.service.FansService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class FansController {
     }
 
     /**
-     * 查询作品粉丝
+     * 查询作品的所有粉丝
      */
     @GetMapping("fans")
     public List<User> listFans(@RequestParam("id") String id) {
@@ -53,12 +54,11 @@ public class FansController {
     }
 
     /**
-     * 查询我的喜欢
+     * 查询作品的前n位粉丝，按时间戳排序
      */
-    @GetMapping("myLike")
-    public List<Video> myLike(@RequestParam("id") String id) {
-
-        return null;
+    @GetMapping("fans/order")
+    public List<UserDTO> myLike(@RequestParam("id") String id, @RequestParam("num") int num) {
+        return service.listFans(id,num);
     }
 
 
