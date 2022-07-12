@@ -10,6 +10,7 @@
     <module>edc-account</module>
     <module>edc-common</module>
       <module>edc-system</module>
+    <module>edc-demand</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>

@@ -1,5 +1,6 @@
 package com.edcccd.account;
 
+import cn.hutool.json.JSONUtil;
 import com.edcccd.account.mapper.UserMapper;
 import com.edcccd.account.pojo.User;
 import org.junit.jupiter.api.Test;
@@ -45,5 +46,11 @@ public class Account {
         logger.severe("cuowu");
         logger.warning("tishi");
         logger.info("hello");
+    }
+
+    @Test
+    void tewst2(){
+        User user = new User(12,"123","123","12","!2","123");
+        System.out.println(JSONUtil.toJsonStr(user));
     }
 }

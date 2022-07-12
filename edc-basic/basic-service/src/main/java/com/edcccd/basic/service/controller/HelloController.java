@@ -1,10 +1,13 @@
 package com.edcccd.basic.service.controller;
 
 import com.edcccd.basic.api.feign.UserFeign;
+import com.edcccd.basic.api.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class HelloController {
@@ -19,7 +22,7 @@ public class HelloController {
   }
 
   @GetMapping("user")
-  String listUser() {
+  List<User> listUser() {
     return userFeign.listUser();
   }
 

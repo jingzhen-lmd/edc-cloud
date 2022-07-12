@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class CommonConfig implements ApplicationContextAware {
+
   @Override
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 //    获取template对象
@@ -24,8 +25,9 @@ public class CommonConfig implements ApplicationContextAware {
       String exchange = returnedMessage.getExchange();// 交换机
       String routingKey = returnedMessage.getRoutingKey();//路由key
 
-      System.out.println(returnedMessage);
-      // todo 这里可以执行重发业务
+      System.out.println("回传接受失败的消息" + returnedMessage);
+//       这里可以将消息从exchange重发到queue
+//      template.convertAndSend(exchange, "wahaha", message);
     });
 
   }

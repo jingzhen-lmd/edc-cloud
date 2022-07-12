@@ -1,4 +1,4 @@
-package com.edcccd.common.pojo;
+package com.edcccd.demand.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,4 +14,6 @@ public class Video {
     private long id;
     private String name;
     private String data;
+    // 点赞数目
+    private long fansNum;
 }
