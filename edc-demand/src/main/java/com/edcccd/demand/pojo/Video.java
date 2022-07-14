@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Video {
-    private long id;
+    private Long id;
     private String name;
     private String data;
     // 点赞数目
