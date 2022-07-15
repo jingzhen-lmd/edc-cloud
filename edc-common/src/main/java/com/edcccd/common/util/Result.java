@@ -1,4 +1,4 @@
-package com.edcccd.basic.service.common;
+package com.edcccd.common.util;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

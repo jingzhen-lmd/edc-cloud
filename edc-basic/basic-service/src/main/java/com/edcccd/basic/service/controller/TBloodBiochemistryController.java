@@ -14,7 +14,7 @@ import java.util.List;
  * 血生化检查
  */
 @RestController
-@RequestMapping("basic/bloodBiochemistry")
+@RequestMapping("bloodBiochemistry")
 public class TBloodBiochemistryController {
 
   @Autowired

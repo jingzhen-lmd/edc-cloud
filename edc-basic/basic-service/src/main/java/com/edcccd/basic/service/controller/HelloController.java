@@ -21,6 +21,11 @@ public class HelloController {
     return userFeign.hello();
   }
 
+  @GetMapping("basic")
+  public String helloBasic() {
+    return "helloBasic";
+  }
+
   @GetMapping("user")
   List<User> listUser() {
     return userFeign.listUser();

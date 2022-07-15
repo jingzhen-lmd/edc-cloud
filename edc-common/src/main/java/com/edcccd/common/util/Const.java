@@ -2,6 +2,9 @@ package com.edcccd.common.util;
 
 import java.time.LocalDateTime;
 
+/**
+ * 系统静态常量
+ */
 public class Const {
     /**
      * 程序起始日期
