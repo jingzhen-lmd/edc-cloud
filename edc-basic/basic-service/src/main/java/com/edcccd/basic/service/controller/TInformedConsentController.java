@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("informedConsent")
 @RestController
-public interface TInformedConsentController {
+public class TInformedConsentController {
 }

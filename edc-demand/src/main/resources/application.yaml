@@ -1,10 +1,19 @@
 server:
   port: 8095
+  servlet:
+    context-path: /demand
+
 
 spring:
   # 服务名称
   application:
     name: demand
+
+  servlet:
+    multipart:
+      location: /upload
+      max-file-size: 50MB #设置允许单个文件上传的大小
+      max-request-size: 100MB #设置允许上传的总的文件的大小
 
   # 数据源配置
   datasource:
@@ -42,3 +51,7 @@ spring:
     #  level:
     # 下面路径为feign的全路径地址，可自定义记录某个类/包的日志级别
 #    com.edcccd.basic.basic.feign: debug
+
+myRootPath: F:/ssss/
+#myRootPath: /home/mysave/
+userPath: ccd/

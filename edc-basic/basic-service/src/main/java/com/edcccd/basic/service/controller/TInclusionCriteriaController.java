@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("inclusionCriteria")
 @RestController
-public interface TInclusionCriteriaController{
+public class TInclusionCriteriaController{
 }

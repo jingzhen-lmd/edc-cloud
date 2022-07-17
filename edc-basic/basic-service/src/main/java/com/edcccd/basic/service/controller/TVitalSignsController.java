@@ -5,5 +5,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("vitalSigns")
 @RestController
-public interface TVitalSignsController {
+public class TVitalSignsController {
 }

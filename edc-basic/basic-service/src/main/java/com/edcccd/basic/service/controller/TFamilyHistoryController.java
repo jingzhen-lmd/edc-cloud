@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("familyHistory")
 @RestController
-public interface TFamilyHistoryController {
+public class TFamilyHistoryController {
 }
