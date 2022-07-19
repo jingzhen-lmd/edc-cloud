@@ -12,7 +12,7 @@ public class Result<T> {
     /**
      * 状态码
      */
-    private String code;
+    private int code;
     /**
      * 信息
      */
@@ -33,18 +33,18 @@ public class Result<T> {
      * 构造方法
      */
     public static <T> Result<T> success(T data) {
-        return new Result<T>().setCode("200").setMessage("访问成功").setData(data);
+        return new Result<T>().setCode(200).setMessage("访问成功").setData(data);
     }
 
     public static <T> Result<T> success() {
-        return new Result<T>().setCode("200").setMessage("访问成功");
+        return new Result<T>().setCode(200).setMessage("访问成功");
     }
 
-    public static <T> Result<T> fail(String code, String message) {
+    public static <T> Result<T> fail(int code, String message) {
         return new Result<T>().setCode(code).setMessage(message);
     }
 
     public static <T> Result<T> fail_null(String data) {
-        return new Result<T>().setCode("400").setMessage("传入的参数:" + data + "为空");
+        return new Result<T>().setCode(400).setMessage("传入的参数:" + data + "为空");
     }
 }
