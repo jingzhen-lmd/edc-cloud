@@ -52,6 +52,6 @@ spring:
     # 下面路径为feign的全路径地址，可自定义记录某个类/包的日志级别
 #    com.edcccd.basic.basic.feign: debug
 
-myBasePath: F:/ssss/
+myBasePath: D:/ssss/
 #myRootPath: /home/mysave/
 userPath: ccd/
