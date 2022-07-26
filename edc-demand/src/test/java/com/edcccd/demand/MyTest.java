@@ -16,7 +16,6 @@ public class MyTest {
     public void ceshi() {
 
 
-        service.getSubPath("dasd/asd", "dasd/asd/54656");
 
     }
 }

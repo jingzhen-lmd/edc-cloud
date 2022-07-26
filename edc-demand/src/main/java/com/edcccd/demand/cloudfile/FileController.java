@@ -21,7 +21,7 @@ public class FileController {
 
     @GetMapping("hello")
     public String hello() {
-        service.jiLu();
+        // service.jiLu();
         return "hello";
     }
 
