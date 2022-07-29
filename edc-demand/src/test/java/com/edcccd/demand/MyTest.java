@@ -16,8 +16,6 @@ public class MyTest {
     public void ceshi() {
 
 
-//        service.getSubPath("dasd/asd", "dasd/asd/54656");
-//704368749818300
-        System.out.println(System.nanoTime());
+
     }
 }

@@ -37,8 +37,12 @@ mybatis-plus:
   configuration:
     #    关闭驼峰转换
     map-underscore-to-camel-case: true
+    #    标准日志
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 logging:
   level:
     # 下面路径为feign的全路径地址，可自定义记录某个类/包的日志级别
-    com.edcccd.basic.feign: debug
+    #    com.edcccd.basic.feign: debug
+    com: error
+    org: error
