@@ -1,59 +1,54 @@
 package com.edcccd.account.controller;
 
-import com.edcccd.account.common.Result;
-import com.edcccd.account.pojo.User;
-import com.edcccd.account.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import com.edcccd.account.entity.User;
+import com.edcccd.account.service.LoginService;
+import com.edcccd.common.util.Result;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.annotation.Resource;
 
 /**
- * 登录模块
+ * 登录接口
  */
-@RequestMapping("account/login")
 @RestController
 public class LoginController {
 
-    @Autowired
-    private UserService service;
+    @Resource
+    LoginService loginService;
+
+    /**
+     * 测试
+     */
+    @GetMapping("hello")
+    public Result<String> hello() {
+        return Result.success("nihaowa");
+    }
+    /**
+     * 测试
+     */
+    @GetMapping("hello2")
+    public Result<String> hello2() {
+        return Result.success("nihaowa2222");
+    }
+
 
     /**
      * 登录
-     *
-     * @param user 用户
      */
-    @PostMapping
-    public Result<String> login(HttpServletRequest request, @RequestBody User user) {
-        return service.login(request, user);
+    @PostMapping("login")
+    public Result<String> login(@RequestBody User user) {
+        return loginService.login(user);
     }
 
     /**
      * 登出
      */
-    @GetMapping("/loginOut")
-    public Result<Void> loginOut(HttpServletRequest request) {
-        request.removeAttribute("user");
+    @PostMapping("logout")
+    public Result<Void> logout() {
+
         return Result.success();
-    }
-
-    /**
-     * 获取短信验证码
-     *
-     * @param phone 手机号
-     */
-    @GetMapping("/getCheckCode")
-    public Result<String> getCheckCode(@RequestParam("phone") String phone) {
-        return service.getCheckCode(phone);
-    }
-
-    /**
-     * 手机登录
-     *
-     * @param user 用户
-     */
-    @PostMapping("/phoneLogin")
-    public Result<String> phoneLogin(@RequestBody User user) {
-        return service.phoneLogin(user);
     }
 }

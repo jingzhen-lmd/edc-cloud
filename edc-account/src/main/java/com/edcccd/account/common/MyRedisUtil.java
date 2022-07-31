@@ -1,13 +1,14 @@
-package com.edcccd.common.util;
+package com.edcccd.account.common;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.edcccd.common.util.RedisData;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,18 +20,18 @@ import java.util.function.Function;
  * redis缓存工具类
  */
 @Component
-public class RedisCacheUtil {
+public class MyRedisUtil {
 
-    @Autowired
+    @Resource
     private StringRedisTemplate template;
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 字符串缓存,默认30分钟过期
      */
-    public boolean addCache(String pre, String value) {
+    public  boolean addCache(String pre, String value) {
         if (StrUtil.isBlank(pre))
             return false;
         Boolean isSuccess = template.opsForValue().setIfAbsent(pre, value, 30, TimeUnit.MINUTES);
@@ -108,6 +109,13 @@ public class RedisCacheUtil {
         });
 
         redisTemplate.opsForHash().putAll(pre, redisDataMap);
+    }
+
+    /**
+     * 最简单的直接查询字符串
+     */
+    public String getString(String key){
+        return template.opsForValue().get(key);
     }
 
     /**

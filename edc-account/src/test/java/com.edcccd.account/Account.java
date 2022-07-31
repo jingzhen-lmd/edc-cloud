@@ -1,56 +1,28 @@
 package com.edcccd.account;
 
-import cn.hutool.json.JSONUtil;
 import com.edcccd.account.mapper.UserMapper;
-import com.edcccd.account.pojo.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.io.IOException;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
 public class Account {
 
     @Autowired
     UserMapper mapper;
+    @Autowired
+    PasswordEncoder encoder;
 
     @Test
     public void test1() {
-        User user = new User();
-        user.setUserName("xiaoming");
-        user.setPassword("1234");
-        user.setPhone("1456");
-        user.setPower("1");
-        user.setCheckCode("asd");
-        int insert = mapper.insert(user);
-        System.out.println(insert);
+        System.out.println(mapper.listUserPower(1L));
     }
 
-    @Test
-    public void testLog() throws IOException {
-// 定义唯一标识，通常是类名
-        Logger logger = Logger.getLogger("com.suibian.wahaha");
-//        /log 目录必须存在，不能创建目录，智能创建文件？
-        FileHandler fileHandler = new FileHandler(".//mylog.log");
-        SimpleFormatter formatter = new SimpleFormatter();
-
-        fileHandler.setFormatter(formatter);
-        logger.addHandler(fileHandler);
-
-        //        logger.log(Level.INFO,"hello");
-        logger.severe("cuowu");
-        logger.warning("tishi");
-        logger.info("hello");
-    }
 
     @Test
-    void tewst2(){
-        User user = new User(12,"123","123","12","!2","123");
-        System.out.println(JSONUtil.toJsonStr(user));
+    void tewst2() {
+        String str = "$2a$10$X5iwQAG.MCmK/3qpd.Px5.uNH98atwRiWNeTHmzIP/32r4KOCv5yq";
+        System.out.println(encoder.matches("1", str));
     }
 }

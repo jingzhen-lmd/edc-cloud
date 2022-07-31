@@ -19,22 +19,23 @@
   </properties>
 
   <dependencies>
+    <!--spring-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-    <!--测试-->
+    <!--spring测试-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
 
-    <!--    lombok插件-->
+    <!--lombok插件-->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <optional>true</optional>
+<!--      <optional>true</optional>-->
     </dependency>
 
     <!--redis-->
