@@ -16,3 +16,12 @@ spring:
           uri: lb://basic-service # 路由到哪个服务
           predicates:
             - Path=/basic/** # 匹配规则：basic开头
+  redis:
+    host: 43.142.160.234
+    port: 6379
+    password: redis2jiu41ge+da+sb
+
+
+jwt:
+  secret: qweqw
+  expiration: 3600
