@@ -2,7 +2,7 @@ package com.edcccd.account.common.interceptor;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import com.edcccd.account.pojo.User;
+import com.edcccd.account.entity.User;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,7 +46,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
         User user = JSONUtil.toBean(user2Json, User.class);
-        UserHolder.saveUser(user);
+        // UserHolder.saveUser(user);
 
         // 有则放行，刷新有效期
         template.opsForValue().set(LOGIN_TOKEN + token, user2Json, 70, TimeUnit.MINUTES);
@@ -61,6 +61,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        UserHolder.removeUser();
+        // UserHolder.removeUser();
     }
 }

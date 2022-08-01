@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edcccd.account.mapper.MenuPowerMapper">
+  <resultMap id="BaseResultMap" type="com.edcccd.account.entity.MenuPower">
+    <!--@mbg.generated-->
+    <!--@Table menu_power-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="menu_id" jdbcType="BIGINT" property="menuId" />
+    <result column="power_key" jdbcType="VARCHAR" property="powerKey" />
+    <result column="power_name" jdbcType="VARCHAR" property="powerName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, menu_id, power_key, power_name
+  </sql>
+</mapper>

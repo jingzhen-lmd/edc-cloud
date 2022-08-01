@@ -1,52 +1,47 @@
 package com.edcccd.account.controller;
 
-import com.edcccd.account.mapper.UserMapper;
-import com.edcccd.account.pojo.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.edcccd.account.entity.User;
+import com.edcccd.account.service.serviceImpl.UserServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.annotation.Resource;
 
+/**
+ * (user)表控制层
+ *
+ * @author xxxxx
+ */
 @RestController
-@RequestMapping("account")
+@RequestMapping("/user")
 public class UserController {
+    /**
+     * 服务对象
+     */
+    @Resource
+    private UserServiceImpl userServiceImpl;
 
-    @Autowired
-    UserMapper mapper;
-
-    @GetMapping("hello")
-    public String hello() {
-        return "hello";
+    /**
+     * 通过主键查询单条数据
+     *
+     * @param id 主键
+     * @return 单条数据
+     */
+    @GetMapping("selectOne")
+    public User selectOne(Integer id) {
+        return userServiceImpl.getById(id);
     }
 
-    @GetMapping("users")
-    public List<User> listUser() {
-        return mapper.selectList(null);
+    /**
+     * 创建新用户
+     *
+     * @param user 主键
+     * @return 单条数据
+     */
+    @PostMapping("create")
+    public boolean create(@RequestBody User user) {
+        // todo 待完善
+        return userServiceImpl.save(user);
     }
 
-    @GetMapping("users/ids")
-    public List<User> listUser(@RequestBody List<String> idList) {
-        return mapper.selectBatchIds(idList);
-    }
 
-    @GetMapping("user/{id}")
-    public String user(@PathVariable("id") String id) {
-        User user = mapper.selectById(id);
-        return user.toString();
-    }
-
-    @DeleteMapping("user")
-    public int removeUser(@RequestBody User user) {
-        return mapper.deleteById(user);
-    }
-
-    @PostMapping("user")
-    public int addUser(@RequestBody User user) {
-        return mapper.insert(user);
-    }
-
-    @PutMapping("user")
-    public int updateUser(@RequestBody User user) {
-        return mapper.updateById(user);
-    }
 }

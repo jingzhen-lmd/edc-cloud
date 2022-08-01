@@ -4,7 +4,7 @@ import com.edcccd.common.pojo.Product;
 import com.edcccd.common.pojo.Student;
 import com.edcccd.common.service.RedisLock;
 import com.edcccd.common.util.IdGenerator;
-import com.edcccd.common.util.RedisCacheUtil;
+import com.edcccd.common.util.MyRedisUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -72,7 +72,7 @@ public class CommonTest {
     }
 
     @Autowired
-    RedisCacheUtil redisCacheUtil;
+    MyRedisUtil myRedisUtil;
 
     @Test
     public void test04() {
@@ -82,7 +82,7 @@ public class CommonTest {
 //        redisCache.addCacheLogic("asd", student, 30, TimeUnit.MINUTES);
 //        redisCache.addCache("student", student);
 
-        Student wahahaha = redisCacheUtil.getByCashThrow("student", Student.class);
+        Student wahahaha = myRedisUtil.getByCashThrow("student", Student.class);
 //        Student asd = redisCache.getByCashLogic("asd", Student.class);
 
 
