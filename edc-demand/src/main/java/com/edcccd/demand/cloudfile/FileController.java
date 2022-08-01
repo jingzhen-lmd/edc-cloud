@@ -70,7 +70,8 @@ public class FileController {
     public Result<Void> deleteFile(@RequestParam(value = "filePath") String filePath) {
         Assert.notBlank(filePath);
 
-        return service.deleteFile(filePath);
+//        return service.deleteFile(filePath);
+        return Result.fail(500,"暂时没有实现");
     }
 
     /**

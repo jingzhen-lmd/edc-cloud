@@ -6,7 +6,14 @@ server:
 spring:
   # 服务名称
   application:
-    name: basicservice
+    name: basic-service
+
+  # 注册中心
+  cloud:
+    nacos:
+      server-addr: http://43.142.160.234:8848
+  #      username: nacos
+  #      password: nacoshaishikeyide0
 
   # 数据源配置
   datasource:
@@ -25,12 +32,7 @@ feign:
   httpclient:
     enabled: true
 
-#  # 注册中心
-#  cloud:
-#    nacos:
-#      server-addr: http://43.142.160.234:8848
-#      username: nacos
-#      password: nacoshaishikeyide0
+
 
 # mybatis-plus
 mybatis-plus:

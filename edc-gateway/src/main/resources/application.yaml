@@ -1,0 +1,18 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: edc-gateway
+
+  cloud:
+    nacos:
+      server-addr: 43.142.160.234:8848 #nacos地址
+      username: nacos
+      password: nacos
+    gateway:
+      routes: # 网关路由配置
+        - id: basic # 路由id，自定义即可，唯一
+          uri: lb://basic-service # 路由到哪个服务
+          predicates:
+            - Path=/basic/** # 匹配规则：basic开头
