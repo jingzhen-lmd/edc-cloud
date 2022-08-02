@@ -10,8 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>edc-account</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+    <module>account-api</module>
+    <module>account-service</module>
+  </modules>
 
-    <properties>
+  <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
