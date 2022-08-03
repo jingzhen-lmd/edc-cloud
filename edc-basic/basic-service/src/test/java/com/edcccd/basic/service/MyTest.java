@@ -9,6 +9,8 @@ import com.edcccd.basic.service.mapper.TVisitDayMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -21,6 +23,9 @@ public class MyTest {
 
     @Autowired
     TVisitDayMapper mapper;
+
+//    @Autowired
+    RestTemplate restTemplate =new RestTemplate();
 
 
     @Test
@@ -58,6 +63,16 @@ public class MyTest {
         mapper.selectPage(page, wrapper);
 
         System.out.println(page.getRecords().stream().map(TVisitDay::getId).collect(Collectors.toList()));
+    }
+
+    @Test
+    void ceshi(){
+        ResponseEntity<String> entity =
+            restTemplate.getForEntity("http://account-service/hello", String.class);
+
+
+        String list =  entity.getBody();
+        System.out.println(list);
     }
 
 }

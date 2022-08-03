@@ -2,7 +2,7 @@ package com.edcccd.account.service.service.serviceImpl;
 
 import cn.hutool.json.JSONUtil;
 import com.edcccd.account.api.entity.User;
-import com.edcccd.account.api.entity.UserDetail;
+import com.edcccd.account.service.entity.UserDetail;
 import com.edcccd.account.service.service.LoginService;
 import com.edcccd.account.service.util.MyRedisUtil;
 import com.edcccd.account.service.util.MyTokenUtil;

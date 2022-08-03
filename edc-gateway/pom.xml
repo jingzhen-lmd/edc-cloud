@@ -28,13 +28,8 @@
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
     </dependency>
-    <!-- Feign Client for loadBalancing -->
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-loadbalancer</artifactId>
-    </dependency>
 
-    <!--    jwt依赖-->
+    <!--jwt依赖-->
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt</artifactId>
@@ -61,13 +56,21 @@
       <!--      <optional>true</optional>-->
     </dependency>
 
-
-
 <!--    <dependency>-->
 <!--      <groupId>com.example</groupId>-->
-<!--      <artifactId>edc-common</artifactId>-->
+<!--      <artifactId>account-api</artifactId>-->
 <!--      <version>0.0.1-SNAPSHOT</version>-->
 <!--    </dependency>-->
-  </dependencies>
 
+    <!--    feign依赖包    -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+    </dependency>
+    <!--负载均衡组件-->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+    </dependency>
+  </dependencies>
 </project>

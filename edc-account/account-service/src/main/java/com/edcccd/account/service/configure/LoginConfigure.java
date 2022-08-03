@@ -40,6 +40,7 @@ public class LoginConfigure {
             .antMatchers("/hello").anonymous()
             .antMatchers("/hello2").hasAuthority("visit:delete")
             .antMatchers("/login").permitAll()
+            .antMatchers("/check").permitAll()
             .anyRequest().authenticated();
 
         return http.build();

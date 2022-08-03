@@ -1,5 +1,6 @@
-package com.edcccd.account.api.entity;
+package com.edcccd.account.service.entity;
 
+import com.edcccd.account.api.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

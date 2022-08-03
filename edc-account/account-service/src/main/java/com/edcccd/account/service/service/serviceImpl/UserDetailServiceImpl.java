@@ -2,7 +2,7 @@ package com.edcccd.account.service.service.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.edcccd.account.api.entity.User;
-import com.edcccd.account.api.entity.UserDetail;
+import com.edcccd.account.service.entity.UserDetail;
 import com.edcccd.account.service.mapper.UserMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,8 +1,10 @@
 package com.edcccd.gateway.filter;
 
 import cn.hutool.json.JSONObject;
+import com.edcccd.gateway.CheckClient;
 import com.edcccd.gateway.MyRedisUtil;
 import com.edcccd.gateway.MyTokenUtil;
+import com.edcccd.gateway.Result;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.annotation.Order;
@@ -25,6 +27,8 @@ public class AuthorizeFilter implements GlobalFilter {
     MyTokenUtil tokenUtil;
     @Resource
     MyRedisUtil redisUtil;
+    @Resource
+    CheckClient checkClient;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -40,14 +44,16 @@ public class AuthorizeFilter implements GlobalFilter {
             return out(response);
         }
 
-        // 拿到token，通过token校验用户
-        String userId = tokenUtil.getUserIdFromToken(token);
-        if (userId == null) {
-            return out(response);
-        }
-        // 拿redis中的数据
-        String userJson = redisUtil.getString("login:user:"+userId);
-        System.out.println(userJson);
+        checkClient.checkToken(token);
+
+//        // 拿到token，通过token校验用户
+//        String userId = tokenUtil.getUserIdFromToken(token);
+//        if (userId == null) {
+//            return out(response);
+//        }
+//        // 拿redis中的数据
+//        String userJson = redisUtil.getString("login:user:"+userId);
+//        System.out.println(userJson);
 
         return chain.filter(exchange);
     }

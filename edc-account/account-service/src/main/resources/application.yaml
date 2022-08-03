@@ -4,7 +4,7 @@ server:
 spring:
   # 服务名称
   application:
-    name: accountservice
+    name: account-service
 
   # 数据源配置
   datasource:
@@ -18,11 +18,13 @@ spring:
     password: redis2jiu41ge+da+sb
 
   # 注册中心
-#  cloud:
-#    nacos:
-#      server-addr: http://43.142.160.234:8848
-#      username: nacos
-#      password: nacoshaishikeyide0
+  cloud:
+    nacos:
+      server-addr: http://43.142.160.234:8848
+      username: nacos
+      password: nacos
+#      discovery:
+#        ip: 43.142.160.234
 
 
 # mybatis-plus

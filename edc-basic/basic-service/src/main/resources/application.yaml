@@ -11,9 +11,11 @@ spring:
   # 注册中心
   cloud:
     nacos:
-      server-addr: http://43.142.160.234:8848
-  #      username: nacos
-  #      password: nacoshaishikeyide0
+      server-addr: 43.142.160.234:8848
+      username: nacos
+      password: nacos
+#      discovery:
+#        ip: localhost
 
   # 数据源配置
   datasource:

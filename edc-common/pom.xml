@@ -9,8 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-<!--  底层公共类，对工具进行封装-->
-
+  <!--  依赖、公共类、工具进行封装-->
   <artifactId>edc-common</artifactId>
 
   <properties>
@@ -35,7 +34,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-<!--      <optional>true</optional>-->
+      <!--      <optional>true</optional>-->
     </dependency>
 
     <!--redis-->
@@ -54,8 +53,13 @@
       <artifactId>commons-pool2</artifactId>
     </dependency>
 
-
-    <!--    huTool-->
+    <!--mybatis-plus依赖-->
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <version>${mybatis.version}</version>
+    </dependency>
+    <!--huTool工具包-->
     <dependency>
       <groupId>cn.hutool</groupId>
       <artifactId>hutool-all</artifactId>
