@@ -21,6 +21,12 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.example</groupId>
+      <artifactId>edc-common</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 
 </project>
