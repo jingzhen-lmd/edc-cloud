@@ -5,6 +5,7 @@ import com.edcccd.common.util.Result;
 
 public interface LoginService {
 
-    Result<String> login(User user);
+  Result<String> login(User user);
+
 }
 

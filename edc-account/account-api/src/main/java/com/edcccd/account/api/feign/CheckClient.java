@@ -1,6 +1,5 @@
 package com.edcccd.account.api.feign;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

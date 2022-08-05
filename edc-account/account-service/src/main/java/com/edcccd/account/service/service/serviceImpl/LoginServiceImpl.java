@@ -1,5 +1,9 @@
 package com.edcccd.account.service.service.serviceImpl;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.ICaptcha;
+import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.core.lang.Validator;
 import cn.hutool.json.JSONUtil;
 import com.edcccd.account.api.entity.User;
 import com.edcccd.account.service.entity.UserDetail;
@@ -14,6 +18,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+import java.util.concurrent.TimeUnit;
+
+import static com.edcccd.account.api.common.Constain.LOGIN_CAPTCHA;
 import static com.edcccd.account.api.common.Constain.LOGIN_USER;
 
 @Service
