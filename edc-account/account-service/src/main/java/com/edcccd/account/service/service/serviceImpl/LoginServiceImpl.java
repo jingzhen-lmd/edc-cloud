@@ -1,9 +1,7 @@
 package com.edcccd.account.service.service.serviceImpl;
 
-import cn.hutool.captcha.CaptchaUtil;
-import cn.hutool.captcha.ICaptcha;
-import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.lang.Validator;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.edcccd.account.api.entity.User;
 import com.edcccd.account.service.entity.UserDetail;
@@ -18,9 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-import java.util.concurrent.TimeUnit;
-
-import static com.edcccd.account.api.common.Constain.LOGIN_CAPTCHA;
 import static com.edcccd.account.api.common.Constain.LOGIN_USER;
 
 @Service
@@ -32,6 +27,8 @@ public class LoginServiceImpl implements LoginService {
     MyRedisUtil redisUtil;
     @Resource
     MyTokenUtil tokenUtil;
+    @Resource
+    CaptchaServiceImpl captchaService;
 
     @Override
     public Result<String> login(User user) {
@@ -50,6 +47,25 @@ public class LoginServiceImpl implements LoginService {
         String token = tokenUtil.generateToken(userDetail.getUser().getId());
 
         return Result.success(token);
+    }
+
+    @Override
+    public Result<Boolean> loginCaptcha(String captcha, User user) {
+        if (StrUtil.isBlank(captcha)) {
+            return Result.fail(400, "验证码为空");
+        }
+        if (user == null || StrUtil.isBlank(user.getPhone())) {
+            return Result.fail(400, "手机号为空");
+        }
+        if (!Validator.isMobile(user.getPhone())) {
+            return Result.fail(400, "请输入正确的手机号");
+        }
+
+        Boolean isSuccess = captchaService.verifyCaptcha(captcha, user.getPhone());
+        if (isSuccess) {
+            return Result.success(isSuccess);
+        }
+        return Result.fail(400, "验证码错误！");
     }
 }
 

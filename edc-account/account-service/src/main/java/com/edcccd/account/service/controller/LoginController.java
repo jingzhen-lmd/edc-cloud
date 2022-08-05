@@ -3,11 +3,7 @@ package com.edcccd.account.service.controller;
 import com.edcccd.account.api.entity.User;
 import com.edcccd.account.service.service.LoginService;
 import com.edcccd.common.util.Result;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -27,6 +23,7 @@ public class LoginController {
     public Result<String> hello() {
         return Result.success("nihaowa");
     }
+
     /**
      * 测试
      */
@@ -47,10 +44,8 @@ public class LoginController {
      * 验证码登录
      */
     @PostMapping("loginCaptcha")
-    public Result<String> loginCaptcha(@RequestParam("Captcha")String Captcha,
-        @RequestBody User user) {
-
-      return loginService.login(user);
+    public Result<Boolean> loginCaptcha(@RequestParam("captcha") String captcha, @RequestBody User user) {
+        return loginService.loginCaptcha(captcha, user);
     }
 
     /**
