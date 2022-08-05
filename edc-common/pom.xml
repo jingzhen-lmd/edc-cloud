@@ -58,6 +58,10 @@
       <artifactId>mybatis-plus-boot-starter</artifactId>
       <version>${mybatis.version}</version>
     </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+    </dependency>
     <!--huTool工具包-->
     <dependency>
       <groupId>cn.hutool</groupId>

@@ -1,6 +1,6 @@
 package com.edcccd.account.api.feign;
 
-import com.edcccd.common.util.Result;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface CheckClient {
 
   @GetMapping("check")
-  Result<Void> checkToken(@RequestParam("token") String token);
+  Boolean checkToken(@RequestParam("token") String token);
 
 }

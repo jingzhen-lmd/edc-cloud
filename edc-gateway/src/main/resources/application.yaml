@@ -13,16 +13,20 @@ spring:
     gateway:
       routes: # 网关路由配置
         - id: basic # 路由id，自定义即可，唯一
-#          uri: lb://basic-service # 路由到哪个服务
-          uri: lb://account-service # 路由到哪个服务
+          uri: lb://basic-service # 路由到哪个服务
+          # uri: http://192.168.0.117:8092 # 路由到哪个服务
           predicates:
             - Path=/basic/** # 匹配规则：basic开头
+        - id: account
+          uri: lb://account-service
+          predicates:
+            - Path=/account/**
+        - id: test # 测试
+          uri: lb://account-service
+          predicates:
+            - Path=/hello/**
+
   redis:
     host: 43.142.160.234
     port: 6379
     password: redis2jiu41ge+da+sb
-
-
-jwt:
-  secret: qweqw
-  expiration: 3600

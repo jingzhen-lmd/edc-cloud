@@ -32,7 +32,7 @@ public class LoginServiceImpl implements LoginService {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user
                 .getUserName(), user.getPassword());
 
-        // 2、进行认证，登陆错误由过滤器处理O
+        // 2、进行认证，登陆错误由过滤器处理
         Authentication authenticate = manager.authenticate(authenticationToken);
 
         UserDetail userDetail = (UserDetail) authenticate.getPrincipal();

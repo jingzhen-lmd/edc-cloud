@@ -25,7 +25,7 @@ public class HelloController {
 
   @GetMapping("check")
   public String check() {
-    Result<Void> asdasd = checkClient.checkToken("Asdasd");
+    boolean asdasd = checkClient.checkToken("Asdasd");
     return "asdasdfd";
   }
 

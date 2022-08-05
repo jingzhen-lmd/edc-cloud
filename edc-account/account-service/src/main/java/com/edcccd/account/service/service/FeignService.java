@@ -8,5 +8,5 @@ public interface FeignService {
   /**
    * 将用户信息保存在holder中
    */
-  void saveUserInfo(String userJson);
+  Boolean saveUserInfo(String token);
 }

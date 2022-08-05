@@ -75,14 +75,15 @@ public class MyTokenUtil {
      * 从token中获取用户id
      */
     public String getUserIdFromToken(String token) {
-        try {
-            Claims claims = getClaimFromToken(token);
-            return claims.getId();
-        } catch (Exception e) {
-            // todo 异常则不取出,打印日志
-            System.out.println("token获取id异常" + e.getMessage());
-        }
-        return "token获取id异常";
+      try {
+        Claims claims = getClaimFromToken(token);
+        return claims.getId();
+      } catch (Exception e) {
+          // todo 带修改
+//        throw new RuntimeException("token获取id异常", e);
+          System.out.println("获取id异常");
+          return null;
+      }
     }
 
     /**
