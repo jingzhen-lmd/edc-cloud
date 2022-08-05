@@ -40,6 +40,13 @@ public class MyRedisUtil {
     }
 
     /**
+     * 取出字符串缓存（普通）
+     */
+    public String getCache(String key){
+        return template.opsForValue().get(key);
+    }
+
+    /**
      * 字符串缓存,自定义时间
      *
      * @param pre      前缀
