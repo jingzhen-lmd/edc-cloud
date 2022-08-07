@@ -31,4 +31,9 @@ public class CaptchaController implements CaptchaFeign {
     public Result<Boolean> verifyCaptcha(@RequestParam("code") String code, @RequestParam("key") String key) {
         return captchaService.verifyCaptcha(code, key);
     }
+
+    @GetMapping("phone")
+    public Result<String> getCaptchaByPhone(@RequestParam("key") String phone){
+        return captchaService.getCaptchaByPhone(phone);
+    }
 }

@@ -30,4 +30,11 @@ public interface CaptchaFeign {
     @GetMapping("verify")
     Result<Boolean> verifyCaptcha(@RequestParam("code") String code, @RequestParam("key") String key);
 
+    /**
+     * 校验验证码
+     *
+     * @param phone 电话号
+     */
+    @GetMapping("phone")
+    Result<String> getCaptchaByPhone(@RequestParam("key") String phone);
 }

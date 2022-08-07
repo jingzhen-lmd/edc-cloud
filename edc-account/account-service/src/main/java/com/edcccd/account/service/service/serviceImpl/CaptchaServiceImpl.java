@@ -2,6 +2,7 @@ package com.edcccd.account.service.service.serviceImpl;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.StrUtil;
 import com.edcccd.account.api.feign.CaptchaFeign;
 import com.edcccd.account.service.util.MyRedisUtil;
@@ -36,6 +37,20 @@ public class CaptchaServiceImpl implements CaptchaFeign {
         String cache = redisUtil.getCache(CAPTCHA + key);
         Boolean isMach = StrUtil.isNotBlank(cache) && cache.equals(code);
         return Result.success(isMach);
+    }
+
+    @Override
+    public Result<String> getCaptchaByPhone(String phone) {
+        if (!Validator.isMobile(phone)) {
+            return Result.fail(400, "请输入正确的手机号");
+        }
+        // String captcha = getCaptcha(phone).getData();
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100, 40);
+        String captcha = lineCaptcha.getCode();
+        redisUtil.pushCache(CAPTCHA + phone, captcha, 5, TimeUnit.MINUTES);
+
+        // todo 以后改为短信发送
+        return Result.success(captcha);
     }
 
 
