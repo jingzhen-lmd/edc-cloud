@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Data
@@ -33,7 +34,7 @@ public class Menu {
     /**
      * 菜单名字
      */
-    @TableField(value = "menu_name")
+    @NotBlank
     private String menuName;
 
     /**

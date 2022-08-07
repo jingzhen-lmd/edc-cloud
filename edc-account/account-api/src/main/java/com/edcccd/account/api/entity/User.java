@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
@@ -24,7 +25,7 @@ public class User {
     /**
      * 账号
      */
-    @TableField(value = "user_name")
+    @NotBlank(message = "账号不能为空")
     private String userName;
 
     /**
@@ -42,7 +43,6 @@ public class User {
     /**
      * 电话号码
      */
-    @TableField(value = "phone")
     private String phone;
 
     /**
@@ -52,7 +52,7 @@ public class User {
     private String email;
 
     /**
-     * 0女1男
+     * 0女1男2未知
      */
     @TableField(value = "sex")
     private String sex;

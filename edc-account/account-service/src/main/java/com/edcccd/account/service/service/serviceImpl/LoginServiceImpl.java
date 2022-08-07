@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.edcccd.account.api.entity.User;
 import com.edcccd.account.service.entity.UserDetail;
+import com.edcccd.account.service.mapper.UserMapper;
 import com.edcccd.account.service.service.LoginService;
 import com.edcccd.account.service.util.MyRedisUtil;
 import com.edcccd.account.service.util.MyTokenUtil;
@@ -29,6 +30,8 @@ public class LoginServiceImpl implements LoginService {
     MyTokenUtil tokenUtil;
     @Resource
     CaptchaServiceImpl captchaService;
+    @Resource
+    UserMapper mapper;
 
     @Override
     public Result<String> login(User user) {
