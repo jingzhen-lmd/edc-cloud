@@ -5,10 +5,10 @@ import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.util.StrUtil;
 import com.edcccd.account.api.feign.CaptchaFeign;
 import com.edcccd.account.service.util.MyRedisUtil;
+import com.edcccd.common.util.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import static com.edcccd.account.api.common.Constain.CAPTCHA;
@@ -19,24 +19,24 @@ public class CaptchaServiceImpl implements CaptchaFeign {
     MyRedisUtil redisUtil;
 
     @Override
-    public Boolean getCaptcha(String path, String key) {
+    public Result<String> getCaptcha(String key) {
         if (StrUtil.isBlank(key)) {
             throw new RuntimeException("输入key为空,无法生成验证码");
         }
         //定义图形验证码的长和宽
-        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 80);
-
-        //图形验证码写出，可以写出到文件，也可以写出到流
-        lineCaptcha.write(new File(path));
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100, 40);
 
         String captcha = lineCaptcha.getCode();
-        redisUtil.addCache(CAPTCHA + key, captcha, 5, TimeUnit.MINUTES);
-        return true;
+        redisUtil.pushCache(CAPTCHA + key, captcha, 5, TimeUnit.MINUTES);
+        return Result.success(lineCaptcha.getImageBase64Data());
     }
 
     @Override
-    public Boolean verifyCaptcha(String code, String key) {
+    public Result<Boolean> verifyCaptcha(String code, String key) {
         String cache = redisUtil.getCache(CAPTCHA + key);
-        return StrUtil.isNotBlank(cache) && cache.equals(code);
+        Boolean isMach = StrUtil.isNotBlank(cache) && cache.equals(code);
+        return Result.success(isMach);
     }
+
+
 }

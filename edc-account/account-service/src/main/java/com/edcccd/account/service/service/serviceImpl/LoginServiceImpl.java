@@ -64,7 +64,7 @@ public class LoginServiceImpl implements LoginService {
             return Result.fail(400, "请输入正确的手机号");
         }
 
-        Boolean isSuccess = captchaService.verifyCaptcha(captcha, user.getPhone());
+        Boolean isSuccess = captchaService.verifyCaptcha(captcha, user.getPhone()).getData();
         if (isSuccess) {
             return Result.success(isSuccess);
         }

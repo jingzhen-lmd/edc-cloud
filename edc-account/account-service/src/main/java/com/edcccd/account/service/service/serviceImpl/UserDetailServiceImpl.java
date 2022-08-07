@@ -28,6 +28,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         // 查询用户
         User user = mapper.selectOne(wrapper);
+        if (user==null){
+            throw new UsernameNotFoundException(username);
+        }
+
         //  查询权限
         List<String> powers = mapper.listUserPower(user.getId());
 

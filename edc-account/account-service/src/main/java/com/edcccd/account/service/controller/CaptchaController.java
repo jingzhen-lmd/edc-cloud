@@ -2,6 +2,7 @@ package com.edcccd.account.service.controller;
 
 import com.edcccd.account.api.feign.CaptchaFeign;
 import com.edcccd.account.service.service.serviceImpl.CaptchaServiceImpl;
+import com.edcccd.common.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +22,13 @@ public class CaptchaController implements CaptchaFeign {
 
     @GetMapping
     @Override
-    public Boolean getCaptcha(@RequestParam("path") String path, @RequestParam("key") String key) {
-        return captchaService.getCaptcha(path, key);
+    public Result<String> getCaptcha(@RequestParam("key") String key) {
+        return captchaService.getCaptcha(key);
     }
 
     @GetMapping("verify")
     @Override
-    public Boolean verifyCaptcha(@RequestParam("code") String code, @RequestParam("key") String key) {
+    public Result<Boolean> verifyCaptcha(@RequestParam("code") String code, @RequestParam("key") String key) {
         return captchaService.verifyCaptcha(code, key);
     }
 }

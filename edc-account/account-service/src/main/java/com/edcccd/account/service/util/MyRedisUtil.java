@@ -47,7 +47,7 @@ public class MyRedisUtil {
     }
 
     /**
-     * 字符串缓存,自定义时间
+     * 字符串缓存(不覆盖)
      *
      * @param pre      前缀
      * @param value    data
@@ -60,6 +60,19 @@ public class MyRedisUtil {
             return false;
         Boolean isSuccess = template.opsForValue().setIfAbsent(pre, value, time, timeUnit);
         return isSuccess != null && isSuccess;
+    }
+
+    /**
+     * 字符串缓存(覆盖)
+     *
+     * @param pre      前缀
+     * @param value    data
+     * @param time     time
+     * @param timeUnit timeUnit
+     * @return isSuccess
+     */
+    public void pushCache(String pre, String value, long time, TimeUnit timeUnit) {
+        template.opsForValue().set(pre, value, time, timeUnit);
     }
 
     /**
