@@ -44,7 +44,7 @@
         from co_user_role cur
                  left join co_role_menu_power crm
                            on
-                               cur.user_id = crm.role_id
+                               cur.role_id = crm.role_id
                  left join menu_power mp
                            on
                                mp.id = crm.menu_power_id

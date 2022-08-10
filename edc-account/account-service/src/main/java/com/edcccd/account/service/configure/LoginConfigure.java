@@ -41,7 +41,7 @@ public class LoginConfigure {
         http.authorizeRequests()
             .antMatchers("/hello").anonymous()
             .antMatchers("/hello2").hasAuthority("visit:delete")
-            .antMatchers("/login","/register","/captcha/**").permitAll()
+            .antMatchers("/login","/loginCaptcha","/register","/captcha/**").permitAll()
             .antMatchers("/check").permitAll()
             .anyRequest().authenticated();
 

@@ -29,7 +29,7 @@ public class MyRedisUtil {
     private RedisTemplate<String, Object> redisTemplate;
 
     /**
-     * 字符串缓存,默认30分钟过期
+     * 字符串缓存(30分钟过期,不覆盖)
      */
     public  boolean addCache(String pre, String value) {
         if (StrUtil.isBlank(pre))
