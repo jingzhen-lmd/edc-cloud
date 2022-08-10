@@ -13,6 +13,6 @@ public interface LoginService {
      * @param captcha 输入的验证码
      * @param user    默认使用用户的手机号作为key值
      */
-    Result<Boolean> loginCaptcha(String captcha, User user);
+    Result<String> loginCaptcha(String captcha, User user);
 }
 

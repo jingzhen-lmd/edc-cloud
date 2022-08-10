@@ -22,7 +22,9 @@ public class LoginConfigure {
     @Resource
     CheckTokenFilter tokenFilter;
 
-    // 自定义filterChain
+    /**
+     * 自定义filterChain
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -39,7 +41,7 @@ public class LoginConfigure {
         http.authorizeRequests()
             .antMatchers("/hello").anonymous()
             .antMatchers("/hello2").hasAuthority("visit:delete")
-            .antMatchers("/login","/captcha/**").permitAll()
+            .antMatchers("/login","/register","/captcha/**").permitAll()
             .antMatchers("/check").permitAll()
             .anyRequest().authenticated();
 

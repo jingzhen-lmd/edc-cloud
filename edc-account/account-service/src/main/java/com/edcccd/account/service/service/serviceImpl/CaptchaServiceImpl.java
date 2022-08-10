@@ -44,7 +44,6 @@ public class CaptchaServiceImpl implements CaptchaFeign {
         if (!Validator.isMobile(phone)) {
             return Result.fail(400, "请输入正确的手机号");
         }
-        // String captcha = getCaptcha(phone).getData();
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(100, 40);
         String captcha = lineCaptcha.getCode();
         redisUtil.pushCache(CAPTCHA + phone, captcha, 5, TimeUnit.MINUTES);

@@ -3,11 +3,12 @@ package com.edcccd.account.service.controller;
 import com.edcccd.account.api.feign.CaptchaFeign;
 import com.edcccd.account.service.service.serviceImpl.CaptchaServiceImpl;
 import com.edcccd.common.util.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * 验证码服务
@@ -16,8 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("captcha")
 public class CaptchaController implements CaptchaFeign {
 
-
-    @Autowired
+    @Resource
     CaptchaServiceImpl captchaService;
 
     @GetMapping
@@ -33,7 +33,7 @@ public class CaptchaController implements CaptchaFeign {
     }
 
     @GetMapping("phone")
-    public Result<String> getCaptchaByPhone(@RequestParam("key") String phone){
+    public Result<String> getCaptchaByPhone(@RequestParam("phone") String phone){
         return captchaService.getCaptchaByPhone(phone);
     }
 }

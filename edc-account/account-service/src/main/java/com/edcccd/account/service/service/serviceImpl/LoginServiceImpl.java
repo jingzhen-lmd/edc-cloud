@@ -3,6 +3,7 @@ package com.edcccd.account.service.service.serviceImpl;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.edcccd.account.api.entity.User;
 import com.edcccd.account.service.entity.UserDetail;
 import com.edcccd.account.service.mapper.UserMapper;
@@ -31,7 +32,7 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     CaptchaServiceImpl captchaService;
     @Resource
-    UserMapper mapper;
+    UserMapper userMapper;
 
     @Override
     public Result<String> login(User user) {
@@ -53,7 +54,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public Result<Boolean> loginCaptcha(String captcha, User user) {
+    public Result<String> loginCaptcha(String captcha, User user) {
         if (StrUtil.isBlank(captcha)) {
             return Result.fail(400, "验证码为空");
         }
@@ -64,11 +65,16 @@ public class LoginServiceImpl implements LoginService {
             return Result.fail(400, "请输入正确的手机号");
         }
 
-        Boolean isSuccess = captchaService.verifyCaptcha(captcha, user.getPhone()).getData();
-        if (isSuccess) {
-            return Result.success(isSuccess);
+        Boolean isVerify = captchaService.verifyCaptcha(captcha, user.getPhone()).getData();
+        if (!isVerify) {
+            return Result.fail(400, "验证码错误！");
         }
-        return Result.fail(400, "验证码错误！");
+
+        LambdaQueryWrapper<User> wrapper=new LambdaQueryWrapper<>();
+        wrapper.eq(User::getPhone,user.getPhone());
+        User existsUser = userMapper.selectOne(wrapper);
+
+        return login(existsUser);
     }
 }
 

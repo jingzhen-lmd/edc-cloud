@@ -48,9 +48,12 @@ public class LoginController {
 
     /**
      * 验证码登录
+     * @param captcha 验证码,使用user的phone生成
+     * @param user 用户
+     * @return token
      */
     @PostMapping("loginCaptcha")
-    public Result<Boolean> loginCaptcha(@RequestParam("captcha") String captcha, @RequestBody User user) {
+    public Result<String> loginCaptcha(@RequestParam("captcha") String captcha, @RequestBody User user) {
         return loginService.loginCaptcha(captcha, user);
     }
 

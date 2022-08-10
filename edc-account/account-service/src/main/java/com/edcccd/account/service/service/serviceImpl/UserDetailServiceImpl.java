@@ -13,7 +13,8 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 通过用户名查需的具体方法
+ * 用户认证与权限查询
+ * <p>用于替换默认的内存中认证</p>
  */
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
