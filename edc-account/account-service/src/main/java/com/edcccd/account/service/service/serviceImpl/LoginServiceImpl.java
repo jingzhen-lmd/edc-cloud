@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,7 +38,7 @@ public class LoginServiceImpl implements LoginService {
     CaptchaServiceImpl captchaService;
     @Resource
     UserMapper userMapper;
-    @Autowired
+    @Resource
     UserService userService;
 
     @Override
@@ -98,6 +99,15 @@ public class LoginServiceImpl implements LoginService {
         // 将用户id打包为token，返回
         String token = tokenUtil.generateToken(userDetail.getUser().getId());
         return Result.success(token);
+    }
+
+    @Override
+    public Result<Void> logout() {
+        SecurityContextHolder.getContext().getAuthentication();
+        // redis
+//        redisUtil.removeCache();
+
+        return Result.success();
     }
 }
 

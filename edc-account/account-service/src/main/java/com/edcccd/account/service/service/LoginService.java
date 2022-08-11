@@ -14,5 +14,7 @@ public interface LoginService {
      * @param user    默认使用用户的手机号作为key值
      */
     Result<String> loginCaptcha(String captcha, User user);
+
+    Result<Void> logout();
 }
 

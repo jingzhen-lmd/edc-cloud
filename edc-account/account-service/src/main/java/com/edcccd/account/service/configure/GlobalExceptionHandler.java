@@ -56,6 +56,7 @@ public class GlobalExceptionHandler {
     //设置处理的异常类型，如果没有特定异常则为最大的异常Exception.class
     @ExceptionHandler(value = Exception.class)
     public Result<String> exceptionHandler(Exception e) {
+//        System.out.println(e);
         Result<String> resultInfo = Result.fail(100, e.getMessage());
         return resultInfo;
     }
