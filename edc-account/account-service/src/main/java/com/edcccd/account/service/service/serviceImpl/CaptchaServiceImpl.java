@@ -5,7 +5,7 @@ import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.StrUtil;
 import com.edcccd.account.api.feign.CaptchaFeign;
-import com.edcccd.account.service.util.MyRedisUtil;
+import com.edcccd.common.util.RedisUtil;
 import com.edcccd.common.util.Result;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import static com.edcccd.account.api.common.Constain.CAPTCHA;
 @Service
 public class CaptchaServiceImpl implements CaptchaFeign {
     @Resource
-    MyRedisUtil redisUtil;
+    RedisUtil redisUtil;
 
     @Override
     public Result<String> getCaptcha(String key) {

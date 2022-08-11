@@ -23,7 +23,6 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = BindException.class)
     public Result<String> BindExceptionHandler(BindException e) {
-
         //获取实体类定义的校验注解字段上的message作为异常信息
         String messageInfo = e.getBindingResult().getFieldError() == null ?
                 "输入参数错误" : e.getBindingResult().getFieldError().getDefaultMessage();
@@ -51,12 +50,12 @@ public class GlobalExceptionHandler {
 
     /**
      * 全局异常处理
-     * 如果设置了特定异常处理，全局异常处理可作为兜底异常
+     * <p>
+     * 设置处理的异常类型，如果没有特定异常则为最大的异常Exception.class
+     * </p>
      */
-    //设置处理的异常类型，如果没有特定异常则为最大的异常Exception.class
     @ExceptionHandler(value = Exception.class)
     public Result<String> exceptionHandler(Exception e) {
-//        System.out.println(e);
         Result<String> resultInfo = Result.fail(100, e.getMessage());
         return resultInfo;
     }

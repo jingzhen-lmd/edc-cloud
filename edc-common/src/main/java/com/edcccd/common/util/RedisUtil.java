@@ -5,9 +5,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,19 +16,20 @@ import java.util.function.Function;
 /**
  * redis缓存工具类
  */
-@Component
-public class MyRedisUtil {
+public class RedisUtil {
 
-    @Resource
-    private StringRedisTemplate template;
+    private final StringRedisTemplate template;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    @Resource
-    private RedisTemplate<String, Object> redisTemplate;
+    public RedisUtil(StringRedisTemplate stringRedisTemplate, RedisTemplate<String, Object>  redisTemplate) {
+        this.template = stringRedisTemplate;
+        this.redisTemplate = redisTemplate;
+    }
 
     /**
-     * 字符串缓存,默认30分钟过期
+     * 字符串缓存(30分钟过期,不覆盖)
      */
-    public  boolean addCache(String pre, String value) {
+    public boolean addCache(String pre, String value) {
         if (StrUtil.isBlank(pre))
             return false;
         Boolean isSuccess = template.opsForValue().setIfAbsent(pre, value, 30, TimeUnit.MINUTES);
@@ -41,12 +40,12 @@ public class MyRedisUtil {
     /**
      * 取出字符串缓存（普通）
      */
-    public String getCache(String key){
+    public String getCache(String key) {
         return template.opsForValue().get(key);
     }
 
     /**
-     * 字符串缓存,自定义时间
+     * 字符串缓存(不覆盖)
      *
      * @param pre      前缀
      * @param value    data
@@ -59,6 +58,19 @@ public class MyRedisUtil {
             return false;
         Boolean isSuccess = template.opsForValue().setIfAbsent(pre, value, time, timeUnit);
         return isSuccess != null && isSuccess;
+    }
+
+    /**
+     * 字符串缓存(覆盖)
+     *
+     * @param pre      前缀
+     * @param value    data
+     * @param time     time
+     * @param timeUnit timeUnit
+     * @return isSuccess
+     */
+    public void pushCache(String pre, String value, long time, TimeUnit timeUnit) {
+        template.opsForValue().set(pre, value, time, timeUnit);
     }
 
     /**
@@ -115,6 +127,13 @@ public class MyRedisUtil {
         });
 
         redisTemplate.opsForHash().putAll(pre, redisDataMap);
+    }
+
+    /**
+     * 最简单的直接查询字符串
+     */
+    public String getString(String key) {
+        return template.opsForValue().get(key);
     }
 
     /**

@@ -10,10 +10,9 @@ import com.edcccd.account.service.entity.UserDetail;
 import com.edcccd.account.service.mapper.UserMapper;
 import com.edcccd.account.service.service.LoginService;
 import com.edcccd.account.service.service.UserService;
-import com.edcccd.account.service.util.MyRedisUtil;
 import com.edcccd.account.service.util.MyTokenUtil;
+import com.edcccd.common.util.RedisUtil;
 import com.edcccd.common.util.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,7 +30,7 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     AuthenticationManager manager;
     @Resource
-    MyRedisUtil redisUtil;
+    RedisUtil redisUtil;
     @Resource
     MyTokenUtil tokenUtil;
     @Resource
@@ -82,13 +81,13 @@ public class LoginServiceImpl implements LoginService {
         User exists = userMapper.selectOne(wrapper);
         // 手机用户暂时不注册，直接注册
         if (exists == null) {
-            user.setUserName("手机用户_"+ RandomUtil.randomString(12));
+            user.setUserName("手机用户_" + RandomUtil.randomString(12));
             // 默认密码手机号后六位
             user.setPassword(user.getPhone().substring(5));
             userService.register(user);
             user = userMapper.selectOne(wrapper);
-        }else {
-            user=exists;
+        } else {
+            user = exists;
         }
 
         //  查询权限
@@ -103,10 +102,12 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public Result<Void> logout() {
-        SecurityContextHolder.getContext().getAuthentication();
-        // redis
-//        redisUtil.removeCache();
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return Result.success();
+        }
+        UserDetail userDetail = (UserDetail) authentication.getPrincipal();
+        redisUtil.removeCache(LOGIN_USER + userDetail.getUser().getId());
         return Result.success();
     }
 }
