@@ -1,0 +1,5 @@
+spring:
+  #用于swagger路径配置
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

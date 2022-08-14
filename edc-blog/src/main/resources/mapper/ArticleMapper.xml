@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edcccd.blog.mapper.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.edcccd.blog.entity.Article">
+    <!--@mbg.generated-->
+    <!--@Table article-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="article_item" jdbcType="BIGINT" property="articleItem" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="subtitle" jdbcType="VARCHAR" property="subtitle" />
+    <result column="tag_group" jdbcType="VARCHAR" property="tagGroup" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator_id" jdbcType="BIGINT" property="updatorId" />
+    <result column="updator_name" jdbcType="VARCHAR" property="updatorName" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="power" jdbcType="VARCHAR" property="power" />
+    <result column="deleted" jdbcType="CHAR" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, article_item, title, subtitle, tag_group, picture, `type`, creator_id, creator_name, 
+    create_time, updator_id, updator_name, update_time, `power`, deleted
+  </sql>
+</mapper>

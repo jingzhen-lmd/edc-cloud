@@ -12,6 +12,7 @@
     <module>edc-system</module>
     <module>edc-demand</module>
     <module>edc-gateway</module>
+      <module>edc-blog</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>
