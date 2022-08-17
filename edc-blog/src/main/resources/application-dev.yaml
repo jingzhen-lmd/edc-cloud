@@ -3,3 +3,7 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+    #  静态资源路径配置
+  web:
+    resources:
+      static-locations: classpath:/resource/

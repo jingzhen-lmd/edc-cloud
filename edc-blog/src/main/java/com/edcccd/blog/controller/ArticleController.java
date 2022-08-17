@@ -29,12 +29,13 @@ public class ArticleController {
     /**
      * 通过主键查询单条数据
      *
-     * @param id 主键
+     * @param articleId 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne")
-    public Article selectOne(Integer id) {
-        return articleService.getById(id);
+    @GetMapping("{articleId}")
+    public Result<Article> selectOne(@PathVariable("articleId") Integer articleId) {
+        Article article = articleService.getById(articleId);
+        return Result.success(article);
     }
 
     /**
