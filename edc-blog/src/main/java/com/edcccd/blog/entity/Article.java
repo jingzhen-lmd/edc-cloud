@@ -40,12 +40,6 @@ public class Article {
     private String subtitle;
 
     /**
-     * 标签组
-     */
-    @TableField(value = "tag_group")
-    private String tagGroup;
-
-    /**
      * 图片
      */
     @TableField(value = "picture")

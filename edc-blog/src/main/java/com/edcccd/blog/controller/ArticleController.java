@@ -1,5 +1,6 @@
 package com.edcccd.blog.controller;
 
+import com.edcccd.blog.dto.DtArticle;
 import com.edcccd.blog.entity.Article;
 import com.edcccd.blog.service.ArticleService;
 import com.edcccd.common.util.Result;
@@ -33,8 +34,8 @@ public class ArticleController {
      * @return 单条数据
      */
     @GetMapping("{articleId}")
-    public Result<Article> selectOne(@PathVariable("articleId") Integer articleId) {
-        Article article = articleService.getById(articleId);
+    public Result<DtArticle> selectOne(@PathVariable("articleId") Long articleId) {
+        DtArticle article = articleService.getById(articleId);
         return Result.success(article);
     }
 
@@ -53,7 +54,7 @@ public class ArticleController {
      * @param article 文章
      */
     @PostMapping
-    public Result<Void> publish(@RequestBody Article article) {
+    public Result<Void> publish(@RequestBody DtArticle article) {
         // 文章图片的处理
         articleService.save(article);
         return Result.success();
@@ -66,7 +67,7 @@ public class ArticleController {
      */
     @ApiIgnore
     @DeleteMapping
-    public Result<Void> remove(@RequestBody String articleId) {
+    public Result<Void> remove(@RequestBody Long articleId) {
         articleService.removeById(articleId);
         return Result.success();
     }
@@ -77,7 +78,7 @@ public class ArticleController {
      * @param article 文章
      */
     @PutMapping
-    public Result<Void> update(@RequestBody Article article) {
+    public Result<Void> update(@RequestBody DtArticle article) {
         articleService.updateById(article);
         return Result.success();
     }

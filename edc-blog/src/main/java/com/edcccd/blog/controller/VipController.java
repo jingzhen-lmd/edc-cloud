@@ -15,5 +15,4 @@ public class VipController {
         return "cover/456.jpg";
     }
 
-
 }
