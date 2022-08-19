@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edcccd.blog.mapper.ArticleBodyMapper">
+  <resultMap id="BaseResultMap" type="com.edcccd.blog.entity.ArticleBody">
+    <!--@mbg.generated-->
+    <!--@Table article_body-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="article_id" jdbcType="BIGINT" property="articleId" />
+    <result column="txt" jdbcType="VARCHAR" property="txt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, article_id, txt
+  </sql>
+</mapper>
