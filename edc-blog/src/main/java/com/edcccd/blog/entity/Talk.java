@@ -11,39 +11,39 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
-    * 文章主表
-    */
+ * 说说，相当于发朋友圈，不正式的文章
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "article")
-public class Article {
+@TableName(value = "talk")
+public class Talk {
     @TableId(value = "id", type = IdType.INPUT)
     private Long id;
 
     /**
-     * 标题
+     * 文本内容
      */
-    @TableField(value = "title")
-    private String title;
+    @TableField(value = "txt")
+    private String txt;
 
     /**
-     * 副标题
-     */
-    @TableField(value = "subtitle")
-    private String subtitle;
-
-    /**
-     * 图片
+     * 附图
      */
     @TableField(value = "picture")
     private String picture;
 
     /**
-     * 类型
+     * 用户id
      */
-    @TableField(value = "`type`")
-    private String type;
+    @TableField(value = "user_id")
+    private Long userId;
+
+    /**
+     * 是否置顶
+     */
+    @TableField(value = "is_top")
+    private String isTop;
 
     @TableField(value = "creator_id")
     private Long creatorId;
@@ -53,15 +53,6 @@ public class Article {
 
     @TableField(value = "create_time")
     private Date createTime;
-
-    @TableField(value = "updator_id")
-    private Long updatorId;
-
-    @TableField(value = "updator_name")
-    private String updatorName;
-
-    @TableField(value = "update_time")
-    private Date updateTime;
 
     /**
      * 此文章权限
