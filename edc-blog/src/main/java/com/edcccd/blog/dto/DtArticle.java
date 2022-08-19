@@ -2,6 +2,7 @@ package com.edcccd.blog.dto;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.edcccd.blog.entity.Article;
+import com.edcccd.blog.entity.ArticleBody;
 import com.edcccd.blog.entity.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,8 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
-    * 文章主表
-    */
+ * 文章主表
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,9 +21,9 @@ public class DtArticle {
     private Long id;
 
     /**
-     * 文章明细
+     * 文章内容
      */
-    private Long articleItem;
+    private ArticleBody articleBody;
 
     /**
      * 标题
@@ -71,7 +72,7 @@ public class DtArticle {
      */
     private String deleted;
 
-    public DtArticle (Article article) {
-        BeanUtil.copyProperties(article,this);
+    public DtArticle(Article article) {
+        BeanUtil.copyProperties(article, this);
     }
 }

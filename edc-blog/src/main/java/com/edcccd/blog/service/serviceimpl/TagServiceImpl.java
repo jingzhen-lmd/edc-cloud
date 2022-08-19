@@ -3,13 +3,14 @@ package com.edcccd.blog.service.serviceimpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.edcccd.blog.entity.Tag;
 import com.edcccd.blog.mapper.TagMapper;
+import com.edcccd.blog.service.TagService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class TagService {
+public class TagServiceImpl implements TagService {
 
   @Resource
   TagMapper mapper;
@@ -36,5 +37,9 @@ public class TagService {
 
   public Tag getById(Long id) {
     return mapper.selectById(id);
+  }
+
+  public void removeByArticleId(Long articleId) {
+    mapper.removeByArticleId(articleId);
   }
 }

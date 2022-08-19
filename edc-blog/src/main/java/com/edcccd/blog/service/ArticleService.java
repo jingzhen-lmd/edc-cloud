@@ -9,23 +9,27 @@ import java.util.List;
 @Service
 public interface ArticleService {
 
-  /**
-   * 通过详细信息
-   *
-   * @param id
-   *     id
-   */
-  DtArticle getById(Long id);
+    /**
+     * 通过id查需详细信息
+     *
+     * @param id id
+     */
+    DtArticle getById(Long id);
 
-  /**
-   * 分页查询
-   */
-  List<Article> list();
+    /**
+     * 分页查询
+     */
+    List<Article> list();
 
-  void save(DtArticle article);
+    void save(DtArticle article);
 
-  void removeById(Long articleId);
+    /**
+     * 删除文章
+     *
+     * @param articleId 文章id
+     */
+    void removeById(Long articleId);
 
-  void updateById(DtArticle article);
+    void updateById(DtArticle article);
 }
 
