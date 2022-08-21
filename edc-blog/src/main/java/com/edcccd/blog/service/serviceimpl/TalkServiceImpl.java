@@ -2,6 +2,8 @@ package com.edcccd.blog.service.serviceimpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
+import com.edcccd.blog.config.Model;
 import com.edcccd.blog.dto.DtTalk;
 import com.edcccd.blog.entity.Talk;
 import com.edcccd.blog.mapper.TalkMapper;
@@ -19,6 +21,8 @@ public class TalkServiceImpl implements TalkService {
 
     @Resource
     private TalkMapper mapper;
+    @Resource
+    private StartServiceImpl startService;
 
     @Override
     public List<DtTalk> query(Long userId, Integer n) {
@@ -29,24 +33,34 @@ public class TalkServiceImpl implements TalkService {
         wrapper.last("limit " + n);
         List<Talk> talks = mapper.selectList(wrapper);
 
+        return addDetail(talks);
+    }
+
+    @Override
+    public PageDTO<DtTalk> page(@RequestParam("userId") Long userId) {
+        LambdaQueryWrapper<Talk> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Talk::getUserId, userId);
+        Page<Talk> page = PageUtils.getPage(Talk.class);
+        mapper.selectPage(page, wrapper);
+
+        PageDTO<DtTalk> pageDTO = new PageDTO<>(page.getCurrent(), page.getSize());
+        List<DtTalk> dtTalks = addDetail(page.getRecords());
+        pageDTO.setRecords(dtTalks);
+
+        return pageDTO;
+    }
+
+    private List<DtTalk> addDetail(List<Talk> talks) {
         List<DtTalk> dtTalks = new ArrayList<>();
         // todo 在查询前端的参数，放进去
         for (Talk talk : talks) {
             DtTalk dtTalk = new DtTalk(talk);
-            // 图片、点赞、评论
+            dtTalks.add(dtTalk);
+            // 查询点赞
+            dtTalk.setLikeCount(startService.likeCount(Model.TALK, talk.getId()));
+            // 图片、评论
         }
-
         return dtTalks;
-    }
-
-    @Override
-    public Page<Talk> page(@RequestParam("userId") Long userId) {
-        LambdaQueryWrapper<Talk> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Talk::getUserId, userId);
-        Page<Talk> page = PageUtils.getPage(Talk.class);
-
-        mapper.selectPage(page, wrapper);
-        return page;
     }
 
     @Override

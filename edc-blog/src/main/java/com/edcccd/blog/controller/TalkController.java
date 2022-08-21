@@ -1,8 +1,7 @@
 package com.edcccd.blog.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
 import com.edcccd.blog.dto.DtTalk;
-import com.edcccd.blog.entity.Talk;
 import com.edcccd.blog.service.TalkService;
 import com.edcccd.common.util.Result;
 import io.swagger.annotations.Api;
@@ -32,7 +31,7 @@ public class TalkController {
      * @param userId 用户id，不一定是作者
      * @return 单条数据
      */
-    @GetMapping("selectOne")
+    @GetMapping("query")
     public Result<List<DtTalk>> query(Long userId, Integer n) {
         List<DtTalk> dtTalks = service.query(userId, n);
         return Result.success(dtTalks);
@@ -45,8 +44,8 @@ public class TalkController {
      * @return 单条数据
      */
     @GetMapping("page")
-    public Result<Page<Talk>> page(Long userId) {
-        Page<Talk> page = service.page(userId);
+    public Result<PageDTO<DtTalk>> page(Long userId) {
+        PageDTO<DtTalk> page = service.page(userId);
         return Result.success(page);
     }
 

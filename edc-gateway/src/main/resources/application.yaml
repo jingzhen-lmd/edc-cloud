@@ -21,6 +21,10 @@ spring:
           uri: lb://account-service
           predicates:
             - Path=/account/**
+        - id: blog
+          uri: lb://blog-service
+          predicates:
+            - Path=/blog/**
         - id: test # 测试
           uri: lb://account-service
           predicates:

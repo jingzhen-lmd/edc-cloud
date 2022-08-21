@@ -1,5 +1,9 @@
 package com.edcccd.blog.service;
 
+import com.edcccd.blog.entity.Tag;
+
+import java.util.List;
+
 /**
  * 标签服务
  */
@@ -12,4 +16,7 @@ public interface TagService {
      * @param articleId 商品
      */
     void removeByArticleId(Long articleId);
+
+    List<Tag> listAll();
+
 }

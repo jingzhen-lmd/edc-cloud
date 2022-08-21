@@ -3,9 +3,6 @@ package com.edcccd.gateway.filter;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import com.edcccd.account.api.feign.CheckClient;
-import org.springframework.cloud.gateway.filter.GatewayFilter;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -74,7 +71,7 @@ public class AuthorizeFilter implements WebFilter {
   private Mono<Void> out(ServerHttpResponse response) {
     JSONObject message = new JSONObject();
     message.putOpt("success", false);
-    message.putOpt("code", 20001);
+    message.putOpt("code", 401);
     message.putOpt("data", "鉴权失败");
     byte[] bits = message.toString().getBytes(StandardCharsets.UTF_8);
     DataBuffer buffer = response.bufferFactory().wrap(bits);

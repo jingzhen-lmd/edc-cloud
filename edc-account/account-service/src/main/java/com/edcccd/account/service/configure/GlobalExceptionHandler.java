@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = AuthenticationException.class)
     public Result<String> AuthenticationExceptionHandler(AuthenticationException e) {
-        String info = "密码认证异常：" + e.getMessage();
+        String info = "登录失败：" + e.getMessage();
         return Result.fail(401, info);
     }
 

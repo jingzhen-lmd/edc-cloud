@@ -15,16 +15,21 @@ spring:
     password: mysqljiushiyigedashab.+-*
     url: jdbc:mysql://43.142.160.234:3306/edc?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
 
+  redis:
+    host: 43.142.160.234
+    port: 6379
+    password: redis2jiu41ge+da+sb
+
   # 配置环境
   profiles:
     active: dev
 
-    #  # 注册中心
-    #  cloud:
-    #    nacos:
-    #      server-addr: http://43.142.160.234:8848
-    #      username: nacos
-    #      password: nacoshaishikeyide0
+  # 注册中心
+  cloud:
+    nacos:
+      server-addr: http://43.142.160.234:8848
+      username: nacos
+      password: nacos
 
     # mybatis-plus
     #mybatis-plus:

@@ -12,34 +12,37 @@ import java.util.List;
 @Service
 public class TagServiceImpl implements TagService {
 
-  @Resource
-  TagMapper mapper;
+    @Resource
+    TagMapper mapper;
 
-  /**
-   * 获取指定数量的标签
-   */
-  public List<Tag> query(int num) {
-    QueryWrapper<Tag> wrapper = new QueryWrapper<>();
-    wrapper.last("limit" + num);
-    return mapper.selectList(wrapper);
-  }
+    /**
+     * 获取指定数量的标签
+     */
+    public List<Tag> query(int num) {
+        QueryWrapper<Tag> wrapper = new QueryWrapper<>();
+        wrapper.last("limit" + num);
+        return mapper.selectList(wrapper);
+    }
 
-  /**
-   * 查询文章的所有标签
-   *
-   * @param articleId
-   *     文章id
-   */
-  public List<Tag> queryByArticle(Long articleId) {
-    return mapper.queryByArticle(articleId);
-  }
+    /**
+     * 查询文章的所有标签
+     *
+     * @param articleId 文章id
+     */
+    public List<Tag> queryByArticle(Long articleId) {
+        return mapper.queryByArticle(articleId);
+    }
 
 
-  public Tag getById(Long id) {
-    return mapper.selectById(id);
-  }
+    public Tag getById(Long id) {
+        return mapper.selectById(id);
+    }
 
-  public void removeByArticleId(Long articleId) {
-    mapper.removeByArticleId(articleId);
-  }
+    public void removeByArticleId(Long articleId) {
+        mapper.removeByArticleId(articleId);
+    }
+
+    public List<Tag> listAll() {
+        return mapper.selectList(null);
+    }
 }
