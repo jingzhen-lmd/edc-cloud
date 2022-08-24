@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient("account-service")
 public interface CheckClient {
 
-  @GetMapping("check")
-  Boolean checkToken(@RequestParam("token") String token);
+    @GetMapping("/account/check")
+    Boolean checkToken(@RequestParam("token") String token);
 
 }

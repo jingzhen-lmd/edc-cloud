@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: edc-gateway
+  #解决gateway 与 mvc 包冲突的问题
+  main:
+    web-application-type: reactive
 
   cloud:
     nacos:
@@ -30,6 +33,13 @@ spring:
           predicates:
             - Path=/hello/**
 
+
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: mysqljiushiyigedashab.+-*
+    url: jdbc:mysql://43.142.160.234:3306/edc?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
   redis:
     host: 43.142.160.234
     port: 6379

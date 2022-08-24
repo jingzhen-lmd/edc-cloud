@@ -1,10 +1,7 @@
 package com.edcccd.gateway.filter;
 
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONObject;
 import com.edcccd.account.api.feign.CheckClient;
 import org.springframework.core.annotation.Order;
-import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -14,7 +11,6 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
-import java.nio.charset.StandardCharsets;
 
 @Order(-1)
 @Component
@@ -52,6 +48,7 @@ public class AuthorizeFilter implements WebFilter {
   public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
     ServerHttpRequest request = exchange.getRequest();
     ServerHttpResponse response = exchange.getResponse();
+    /*
     // 获取请求头中token值
     String token = request.getHeaders().getFirst(TOKEN);
     if (StrUtil.isBlank(token)) {
@@ -63,21 +60,8 @@ public class AuthorizeFilter implements WebFilter {
     if (!aBoolean) {
       return out(response);
     }
-
+    */
     // 鉴权成功，直接访问，feign不会被拦截
     return chain.filter(exchange);
-  }
-
-  private Mono<Void> out(ServerHttpResponse response) {
-    JSONObject message = new JSONObject();
-    message.putOpt("success", false);
-    message.putOpt("code", 401);
-    message.putOpt("data", "鉴权失败");
-    byte[] bits = message.toString().getBytes(StandardCharsets.UTF_8);
-    DataBuffer buffer = response.bufferFactory().wrap(bits);
-    //response.setStatusCode(HttpStatus.UNAUTHORIZED);
-    //指定编码，否则在浏览器中会中文乱码
-    response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
-    return response.writeWith(Mono.just(buffer));
   }
 }

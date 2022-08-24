@@ -6,19 +6,16 @@
  * @ 修改历史：
  * @ 2022/7/28- jingzhen - 创建。
  */
-package com.edcccd.account.service.util;
+package com.edcccd.gateway.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
 public class MyTokenUtil {
 
     //荷载中用户名
@@ -29,11 +26,9 @@ public class MyTokenUtil {
     private static final String CLAIM_KEY_CREATE = "created";
 
     //密钥
-    @Value("${jwt.secret:'qweqw'}")
-    private String secret;
+    private final String secret = "ccd_project";
     //失效时间
-    @Value("${jwt.expiration:'36000'}")
-    private long expiration;
+    private final long expiration = 36000L;
 
     /**
      * 根据User的id生成token
@@ -59,9 +54,9 @@ public class MyTokenUtil {
      */
     private String generateToken(Map<String, Object> claims) {
         return Jwts.builder().setClaims(claims)  //放入荷载
-                   .setExpiration(generateExpirationDate())    //设置失效时间
-                   .signWith(SignatureAlgorithm.HS256, secret)  //设置签名
-                   .compact();
+                .setExpiration(generateExpirationDate())    //设置失效时间
+                .signWith(SignatureAlgorithm.HS256, secret)  //设置签名
+                .compact();
     }
 
     /**
@@ -75,15 +70,15 @@ public class MyTokenUtil {
      * 从token中获取用户id
      */
     public String getUserIdFromToken(String token) {
-      try {
-        Claims claims = getClaimFromToken(token);
-        return claims.getId();
-      } catch (Exception e) {
-          // todo 带修改
-//        throw new RuntimeException("token获取id异常", e);
-          System.out.println("获取id异常");
-          return null;
-      }
+        try {
+            Claims claims = getClaimFromToken(token);
+            return claims.getId();
+        } catch (Exception e) {
+            // todo 带修改
+            //        throw new RuntimeException("token获取id异常", e);
+            System.out.println("获取id异常");
+            return null;
+        }
     }
 
     /**
@@ -91,9 +86,9 @@ public class MyTokenUtil {
      */
     private Claims getClaimFromToken(String token) {
         Claims claims = Jwts.parser()    //调用转换方法
-                            .setSigningKey(secret)  //放入密钥
-                            .parseClaimsJws(token)  //放入需要转换的token
-                            .getBody(); //取出荷载
+                .setSigningKey(secret)  //放入密钥
+                .parseClaimsJws(token)  //放入需要转换的token
+                .getBody(); //取出荷载
         return claims;
     }
 

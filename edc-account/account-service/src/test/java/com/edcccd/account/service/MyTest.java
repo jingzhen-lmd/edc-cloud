@@ -45,6 +45,12 @@ public class MyTest {
     System.out.println(matches);
 
   }
+  @Test
+  public void tesasdast() {
+    String encode = encoder.encode("123456");
+    System.out.println(encode);
+
+  }
 
 
 
