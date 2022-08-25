@@ -28,6 +28,12 @@ spring:
           uri: lb://blog-service
           predicates:
             - Path=/blog/**
+        - id: vip      # 会员，付费内容
+          uri: lb://blog-service
+          predicates:
+            - Path=/vip/**
+          filters:
+            - RewritePath=/vip/?(?<segment>.*),/$\{segment} # 网关路由，配置重写路径
         - id: test # 测试
           uri: lb://account-service
           predicates:

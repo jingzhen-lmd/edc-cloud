@@ -4,14 +4,17 @@ import cn.hutool.json.JSONUtil;
 import com.edcccd.common.util.RedisUtil;
 import com.edcccd.common.util.Result;
 import com.edcccd.gateway.handle.*;
-import com.edcccd.gateway.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
+import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -26,16 +29,16 @@ import java.nio.charset.StandardCharsets;
 @EnableReactiveMethodSecurity
 public class LoginConfigure {
 
-    private final String[] permitAll = {"/login", "/auth/login", "/loginCaptcha", "/register", "/captcha/**"};
+    private final String[] permitAll = {"/login", "/blog/**", "/loginCaptcha", "/register", "/captcha/**"};
 
     @Resource
     RedisUtil redisUtil;
+
     /**
      * 自定义filterChain
      */
     @Bean
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http,
-                                              UserService userService,
                                               ReactiveAuthenticationManager manager) {
         // 前后端分离，关闭csrf验证
         http.csrf().disable()
@@ -56,7 +59,7 @@ public class LoginConfigure {
         http.authenticationManager(manager)
                 // 配置上下文验证器(鉴权管理器)
                 .securityContextRepository(new JwtSecurityContextRepository(redisUtil))
-                // .addFilterAt(new CheckTokenFilter(), SecurityWebFiltersOrder.HTTP_BASIC)// 增加自己的filter
+        // .addFilterAt(new CheckTokenFilter(), SecurityWebFiltersOrder.HTTP_BASIC)// 增加自己的filter
         ;
 
         // 配置权限
@@ -69,6 +72,18 @@ public class LoginConfigure {
     }
 
     /**
+     * 提供用于获取UserDetail的Service
+     */
+    @Bean
+    public ReactiveAuthenticationManager reactiveAuthenticationManager(
+            ReactiveUserDetailsService userDetailsService, PasswordEncoder encoder) {
+        UserDetailsRepositoryReactiveAuthenticationManager authenticationManager =
+                new UserDetailsRepositoryReactiveAuthenticationManager(userDetailsService);
+        authenticationManager.setPasswordEncoder(encoder);
+        return authenticationManager;
+    }
+
+    /**
      * 输出响应信息
      */
     public static Mono<Void> writeWith(ServerWebExchange exchange, Result<?> responseMap) {
@@ -78,6 +93,14 @@ public class LoginConfigure {
         //指定编码，否则在浏览器中会中文乱码?测试一下再加
         // response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
         return response.writeWith(Mono.just(buffer));
+    }
+
+    /**
+     * 注入加密方式，替换原来的数据库查询加密
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
 

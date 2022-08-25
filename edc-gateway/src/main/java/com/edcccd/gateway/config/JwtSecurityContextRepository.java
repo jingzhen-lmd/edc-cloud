@@ -1,6 +1,5 @@
 package com.edcccd.gateway.config;
 
-
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.edcccd.common.util.RedisUtil;
@@ -9,7 +8,7 @@ import com.edcccd.gateway.util.MyTokenUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.server.context.ServerSecurityContextRepository;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -65,24 +64,20 @@ public class JwtSecurityContextRepository implements ServerSecurityContextReposi
         Authentication newAuthentication = new UsernamePasswordAuthenticationToken(userDetail, null, userDetail
                 .getAuthorities());
 
-        // Mono<SecurityContext> context = new ReactiveAuthenticationManager() {
+        // 放入holder中
+        SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+
+        // return new ReactiveAuthenticationManager() {
         //     @Override
         //     public Mono<Authentication> authenticate(Authentication authentication) {
         //         // 如果对token有足够的安全认可，可以采用无状态凭证策略，将username和authorities放置在token串中解析获取，此处就可以不用查询数据库验证
-        //         Mono<UserDetails> userDetails = userService
-        //                 .findByUsername(authentication.getPrincipal().toString());
-        //         UserDetails user = userDetails.block();
-        //         if (user == null) {
-        //             throw new DisabledException("账户不可用");
-        //         }
-        //         Authentication auth = new UsernamePasswordAuthenticationToken(user.getUsername(), null, user
+        //         Authentication auth = new UsernamePasswordAuthenticationToken(userDetail, null, userDetail
         //                 .getAuthorities());
         //         return Mono.just(auth);
         //     }
         // }.authenticate(newAuthentication).map(SecurityContextImpl::new);
 
-        SecurityContextImpl securityContext = new SecurityContextImpl(newAuthentication);
-
-        return Mono.just(securityContext);
+        // SecurityContext securityContext = new SecurityContextImpl(newAuthentication);
+        return Mono.empty();
     }
 }

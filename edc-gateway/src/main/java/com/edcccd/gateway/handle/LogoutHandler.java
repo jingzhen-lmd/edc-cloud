@@ -14,6 +14,9 @@ import static com.edcccd.gateway.config.LoginConfigure.writeWith;
 public class LogoutHandler implements ServerLogoutSuccessHandler {
     @Override
     public Mono<Void> onLogoutSuccess(WebFilterExchange exchange, Authentication authentication) {
+        // todo 清除redis数据
+
+
         return writeWith(exchange.getExchange(), Result.success("退出成功"));
     }
 }

@@ -33,20 +33,4 @@ public class CheckTokenFilter implements WebFilter {
 
         return chain.filter(exchange);
     }
-
-    // public Mono<Authentication> convert(ServerWebExchange serverWebExchange) {
-    //     ServerHttpRequest request = serverWebExchange.getRequest();
-    //     MediaType mediaType = request.getHeaders().getContentType();
-    //     if (MediaType.APPLICATION_JSON.isCompatibleWith(mediaType)) {
-    //         ObjectMapper mapper = new ObjectMapper();
-    //         HttpMessageReader<Object> messageReader = new DecoderHttpMessageReader<>(new Jackson2JsonDecoder(mapper));
-    //         ServerRequest serverRequest = ServerRequest
-    //                 .create(serverWebExchange, List.of(messageReader));
-    //         return serverRequest.bodyToMono(LoginModel.class).map(m -> {
-    //             return new ImageCodeAuthenticationToken(m.getUsername(), m.getPassword(), m.getCode(), m.getUuid());
-    //         });
-    //     } else {
-    //         return serverWebExchange.getFormData().map(data -> createAuthentication(data));
-    //     }
-    // }
 }
