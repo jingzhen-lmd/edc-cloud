@@ -31,14 +31,6 @@ public class LoginController {
     }
 
     /**
-     * 测试
-     */
-    @GetMapping("hello2")
-    public Result<String> hello2() {
-        return Result.success("nihaowa2222");
-    }
-
-    /**
      * 账号密码登录
      */
     @PostMapping("login")

@@ -21,7 +21,7 @@ public class RedisUtil {
     private final StringRedisTemplate template;
     private final RedisTemplate<String, Object> redisTemplate;
 
-    public RedisUtil(StringRedisTemplate stringRedisTemplate, RedisTemplate<String, Object>  redisTemplate) {
+    public RedisUtil(StringRedisTemplate stringRedisTemplate, RedisTemplate<String, Object> redisTemplate) {
         this.template = stringRedisTemplate;
         this.redisTemplate = redisTemplate;
     }
@@ -29,12 +29,17 @@ public class RedisUtil {
     /**
      * 字符串缓存(30分钟过期,不覆盖)
      */
-    public boolean addCache(String pre, String value) {
+    public boolean addCache(String pre, String value, int time, boolean isCover) {
         if (StrUtil.isBlank(pre))
             return false;
-        Boolean isSuccess = template.opsForValue().setIfAbsent(pre, value, 30, TimeUnit.MINUTES);
 
-        return isSuccess != null && isSuccess;
+        if (isCover) {
+            template.opsForValue().set(pre, value, time, TimeUnit.MINUTES);
+            return true;
+        } else {
+            Boolean result = template.opsForValue().setIfAbsent(pre, value, time, TimeUnit.MINUTES);
+            return Boolean.TRUE.equals(result);
+        }
     }
 
     /**

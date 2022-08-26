@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.web.server.context.ServerSecurityContextRepository;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -41,7 +42,12 @@ public class JwtSecurityContextRepository implements ServerSecurityContextReposi
         if ("/login".equals(path)) {
             return Mono.empty();
         }
+
         String token = exchange.getRequest().getHeaders().getFirst("token");
+
+        if (token == null && exchange.getRequest().getQueryParams().get("token") != null) {
+            token = exchange.getRequest().getQueryParams().get("token").get(0);
+        }
         if (StrUtil.isBlank(token)) {
             return Mono.empty();
         }
@@ -77,7 +83,7 @@ public class JwtSecurityContextRepository implements ServerSecurityContextReposi
         //     }
         // }.authenticate(newAuthentication).map(SecurityContextImpl::new);
 
-        // SecurityContext securityContext = new SecurityContextImpl(newAuthentication);
-        return Mono.empty();
+        SecurityContext securityContext = new SecurityContextImpl(newAuthentication);
+        return Mono.justOrEmpty(securityContext);
     }
 }

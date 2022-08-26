@@ -9,6 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <!--    edc系统模块，用于构造目录、菜单主要页面等-->
+  <!--    用于博客vip资源展示-->
 
   <artifactId>edc-system</artifactId>
 

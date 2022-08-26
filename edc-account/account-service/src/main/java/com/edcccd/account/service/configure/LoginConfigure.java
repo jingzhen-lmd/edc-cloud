@@ -39,8 +39,8 @@ public class LoginConfigure {
 
         // 配置权限
         http.authorizeRequests()
-                .antMatchers("/hello").anonymous()
-                .antMatchers("/hello2").hasAuthority("visit:delete")
+                .antMatchers("/hello*").anonymous()
+                // .antMatchers("/hello").hasAuthority("visit:delete")
                 .antMatchers("/login", "/loginCaptcha", "/register", "/captcha/**").permitAll()
                 .antMatchers("/logout").authenticated()
                 .antMatchers("/check").permitAll()

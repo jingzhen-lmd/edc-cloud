@@ -11,6 +11,7 @@ import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,7 +30,8 @@ import java.nio.charset.StandardCharsets;
 @EnableReactiveMethodSecurity
 public class LoginConfigure {
 
-    private final String[] permitAll = {"/login", "/blog/**", "/loginCaptcha", "/register", "/captcha/**"};
+    private final String[] permitAll = {"/login", "/account/**", "/blog/**",
+            "/loginCaptcha", "/register", "/captcha/**"};
 
     @Resource
     RedisUtil redisUtil;
@@ -59,12 +61,12 @@ public class LoginConfigure {
         http.authenticationManager(manager)
                 // 配置上下文验证器(鉴权管理器)
                 .securityContextRepository(new JwtSecurityContextRepository(redisUtil))
-        // .addFilterAt(new CheckTokenFilter(), SecurityWebFiltersOrder.HTTP_BASIC)// 增加自己的filter
+        .addFilterAt(new CheckTokenFilter(), SecurityWebFiltersOrder.HTTP_BASIC)// 增加自己的filter
         ;
 
         // 配置权限
         http.authorizeExchange()
-                .pathMatchers("/hello2").hasAuthority("visit:delete")
+                .pathMatchers("/hello2", "/vip/**").hasAuthority("visit:delete")
                 .pathMatchers(permitAll).permitAll()
                 .anyExchange().authenticated();
 

@@ -32,8 +32,10 @@ public class AuthSuccessHandler implements ServerAuthenticationSuccessHandler {
     public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange, Authentication authentication) {
         UserDetail userDetail = (UserDetail) authentication.getPrincipal();
 
-        redisUtil.addCache(LOGIN_USER + userDetail.getUser().getId(), JSONUtil.toJsonStr(userDetail));
-        String token = tokenUtil.generateToken(userDetail.getUser().getId());
+        String userId = userDetail.getUser().getId().toString();
+
+        redisUtil.addCache(LOGIN_USER + userId, JSONUtil.toJsonStr(userDetail), 180, true);
+        String token = tokenUtil.generateToken(userId);
         return writeWith(webFilterExchange.getExchange(), Result.success(token));
     }
 }

@@ -22,9 +22,9 @@ public class HelloController {
 
   @GetMapping("addCash")
   public String add() {
-    boolean b = redisUtil.addCache("addCash", "增加缓存值");
+    redisUtil.addCache("addCash", "增加缓存值");
 
-    return String.valueOf(b);
+    return "增加成功！！！！";
   }
 
   @GetMapping("addCash2")
