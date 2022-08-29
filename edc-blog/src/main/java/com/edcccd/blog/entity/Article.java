@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
-    * 文章主表
-    */
+ * 文章主表
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,6 +38,12 @@ public class Article {
      */
     @TableField(value = "picture")
     private String picture;
+
+    /**
+     * 正文
+     */
+    @TableField(exist = false)
+    private String body;
 
     /**
      * 类型

@@ -55,16 +55,19 @@ public class JwtSecurityContextRepository implements ServerSecurityContextReposi
         // token能正常解析，表示token有效并对应数据库已知用户
         String userId = tokenUtil.getUserIdFromToken(token);
         if (StrUtil.isBlank(userId)) {
-            throw new RuntimeException("token非法" + token);
+            System.out.println("token非法");
+            return Mono.empty();
         }
 
         String userJson = redisUtil.getString(LOGIN_USER + userId);
         if (StrUtil.isBlank(userJson)) {
-            throw new RuntimeException("用户失效" + token);
+            System.out.println("用户失效");
+            return Mono.empty();
         }
         UserDetail userDetail = JSONUtil.toBean(userJson, UserDetail.class);
         if (userDetail == null) {
-            throw new RuntimeException("用户json转换失败" + token);
+            System.out.println("用户json转换失败");
+            return Mono.empty();
         }
 
         Authentication newAuthentication = new UsernamePasswordAuthenticationToken(userDetail, null, userDetail

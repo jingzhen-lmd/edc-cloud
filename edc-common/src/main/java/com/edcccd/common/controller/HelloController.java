@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * 测试类，无用
  */
@@ -30,10 +32,10 @@ public class HelloController {
   @GetMapping("addCash2")
   public void addEntity() {
     Student student = new Student(1, "wahahah", 2);
-    redisUtil.addMap("student:" + student.getId(), student);
+    redisUtil.addMap("student:" + student.getId(), student,100, TimeUnit.MINUTES);
 
     student = new Student(2, "小明同学", 12);
-    redisUtil.addMap("student:" + student.getId(), student);
+    redisUtil.addMap("student:" + student.getId(), student,100, TimeUnit.MINUTES);
 
 
 //    return String.valueOf(b);

@@ -6,6 +6,7 @@ import java.util.Objects;
 
 /**
  * 分页工具类
+ * 由拦截器直接将分页数据放入，用的时候直接取出
  **/
 public class PageUtils {
 

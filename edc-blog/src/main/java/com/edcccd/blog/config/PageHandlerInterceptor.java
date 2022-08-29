@@ -14,6 +14,7 @@ import static com.edcccd.blog.config.Constant.*;
 
 /**
  * 分页拦截器
+ * 从前端请求中直接获取分页信息，分页查询时直接取出
  */
 @Configuration
 public class PageHandlerInterceptor implements HandlerInterceptor {

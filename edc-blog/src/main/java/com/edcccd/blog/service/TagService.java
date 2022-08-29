@@ -19,4 +19,5 @@ public interface TagService {
 
     List<Tag> listAll();
 
+    Long count();
 }

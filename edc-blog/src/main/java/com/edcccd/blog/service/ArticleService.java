@@ -1,6 +1,8 @@
 package com.edcccd.blog.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
 import com.edcccd.blog.dto.DtArticle;
+import com.edcccd.blog.dto.DtArticleSmall;
 import com.edcccd.blog.entity.Article;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +33,15 @@ public interface ArticleService {
     void removeById(Long articleId);
 
     void updateById(DtArticle article);
+
+    // 文章数
+    Long count();
+
+    // 查询最新的轻量级文章
+    List<DtArticleSmall> Latest(int num);
+
+    // 首页的分页查询
+    PageDTO<DtArticle> page();
+
 }
 

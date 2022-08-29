@@ -1,5 +1,6 @@
 package com.edcccd.common.util;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -8,6 +9,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -24,6 +26,11 @@ public class RedisUtil {
     public RedisUtil(StringRedisTemplate stringRedisTemplate, RedisTemplate<String, Object> redisTemplate) {
         this.template = stringRedisTemplate;
         this.redisTemplate = redisTemplate;
+    }
+
+    //  简单版本
+    public void set(String key, String value) {
+        template.opsForValue().set(key, value);
     }
 
     /**
@@ -114,7 +121,7 @@ public class RedisUtil {
     /**
      * 对象缓存为map
      */
-    public void addMap(String pre, Object value) {
+    public void addMap(String pre, Object value,long timeout, final TimeUnit unit) {
         if (StrUtil.isBlank(pre) || value == null)
             return;
 
@@ -132,6 +139,7 @@ public class RedisUtil {
         });
 
         redisTemplate.opsForHash().putAll(pre, redisDataMap);
+        redisTemplate.expire(pre, timeout, unit);
     }
 
     /**
@@ -156,6 +164,23 @@ public class RedisUtil {
         }
 
         return JSONUtil.toBean(resultJson, valueClass);
+    }
+
+    /**
+     * 查询hash对象,并反序列化为指定类,缓存空值来解决缓存穿透问题
+     */
+    public <R> R getHashByCashThrow(String key, Class<R> valueClass) {
+        if (StrUtil.isBlank(key)) {
+            return null;
+        }
+        Map<Object, Object> entries = redisTemplate.opsForHash().entries("blog:HomeInfo");
+
+        if (Collections.emptyMap() == entries) {
+            template.opsForValue().set(key, "", 3, TimeUnit.SECONDS);
+            return null;
+        }
+
+        return BeanUtil.mapToBean(entries, valueClass, false, null);
     }
 
     /**

@@ -36,6 +36,11 @@ public class DtArticle {
     private String subtitle;
 
     /**
+     * 正文
+     */
+    private String body;
+
+    /**
      * 标签组
      */
     private List<Tag> tags;

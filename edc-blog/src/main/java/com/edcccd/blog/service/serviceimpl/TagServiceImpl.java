@@ -45,4 +45,9 @@ public class TagServiceImpl implements TagService {
     public List<Tag> listAll() {
         return mapper.selectList(null);
     }
+
+    @Override
+    public Long count() {
+        return mapper.selectCount(null);
+    }
 }

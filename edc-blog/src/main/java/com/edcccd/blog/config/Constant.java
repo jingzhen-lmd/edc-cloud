@@ -41,4 +41,23 @@ public class Constant {
      */
     public static final String ARTICLE_VIEWS_COUNT = "block:article_views_count";
 
+
+    /******************** 数据库config中key值 *********************/
+    public static final String HOME_INFO = "blog:HomeInfo";
+
+    public static final String BLOG_NAME = "blogName";
+    /**
+     * 留言
+     */
+    public static final String COMMENTS = "comments";
+    /**
+     * 网站公告
+     */
+    public static final String PAGE_NOTICE = "pageNotice";
+    /**
+     * 总访问数量
+     */
+    public static final String VISIT_COUNT = "visitCount";
+
+
 }

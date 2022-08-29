@@ -1,7 +1,8 @@
 package com.edcccd.blog.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
 import com.edcccd.blog.dto.DtArticle;
-import com.edcccd.blog.entity.Article;
+import com.edcccd.blog.dto.DtArticleSmall;
 import com.edcccd.blog.service.ArticleService;
 import com.edcccd.common.util.Result;
 import io.swagger.annotations.Api;
@@ -12,18 +13,13 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * (article)表控制层
- *
- * @author xxxxx
+ * 文章方法
  */
 @RestController
 @RequestMapping("/article")
 @Api(tags = "文章方法")
 public class ArticleController {
 
-    /**
-     * 服务对象
-     */
     @Resource
     private ArticleService articleService;
 
@@ -43,9 +39,29 @@ public class ArticleController {
      * 用于首页的分页查询
      */
     @GetMapping
-    public Result<List<Article>> query() {
-        List<Article> list = articleService.list();
+    public Result<PageDTO<DtArticle>> page() {
+        PageDTO<DtArticle> list = articleService.page();
         return Result.success(list);
+    }
+
+    /**
+     * 查询最新的文章（文章详情页推荐）
+     *
+     * @param num 数量
+     */
+    @GetMapping("latest")
+    public Result<List<DtArticleSmall>> Latest(int num) {
+        List<DtArticleSmall> list = articleService.Latest(num);
+        return Result.success(list);
+    }
+
+    /**
+     * 文章总数
+     */
+    @GetMapping("count")
+    public Result<String> count() {
+        Long num = articleService.count();
+        return Result.success(String.valueOf(num));
     }
 
     /**

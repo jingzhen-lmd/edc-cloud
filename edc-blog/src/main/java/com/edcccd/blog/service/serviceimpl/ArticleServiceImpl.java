@@ -1,16 +1,24 @@
 package com.edcccd.blog.service.serviceimpl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
 import com.edcccd.blog.dto.DtArticle;
+import com.edcccd.blog.dto.DtArticleSmall;
 import com.edcccd.blog.entity.Article;
 import com.edcccd.blog.entity.ArticleBody;
 import com.edcccd.blog.entity.Tag;
 import com.edcccd.blog.mapper.ArticleMapper;
 import com.edcccd.blog.service.ArticleBodyService;
 import com.edcccd.blog.service.ArticleService;
+import com.edcccd.blog.util.PageUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -62,6 +70,37 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void updateById(DtArticle article) {
         throw new RuntimeException("暂时没有实现");
+    }
+
+    @Override
+    public Long count() {
+        return mapper.selectCount(null);
+    }
+
+    @Override
+    public List<DtArticleSmall> Latest(int num) {
+        LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper<>();
+        wrapper.orderByDesc(Article::getCreateTime);
+        wrapper.last("limit " + num);
+
+        List<Article> articles = mapper.selectList(wrapper);
+
+        return BeanUtil.copyToList(articles, DtArticleSmall.class);
+    }
+
+    @Override
+    public PageDTO<DtArticle> page() {
+        Page<DtArticle> page = PageUtils.getPage(DtArticle.class);
+
+        mapper.page(page);
+        PageDTO<DtArticle> pageDTO = new PageDTO<>(page.getCurrent(), page.getSize());
+
+        List<DtArticle> dtArticles = page.getRecords().stream().peek(
+                article -> article.setBody(StrUtil.subPre(article.getBody(), 100)))
+                .collect(Collectors.toList());
+
+        pageDTO.setRecords(dtArticles);
+        return pageDTO;
     }
 }
 
