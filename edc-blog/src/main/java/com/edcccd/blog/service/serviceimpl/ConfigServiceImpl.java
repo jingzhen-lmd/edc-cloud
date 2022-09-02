@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.edcccd.blog.dto.DtHomeInfo;
 import com.edcccd.blog.mapper.ConfigMapper;
 import com.edcccd.blog.service.ArticleService;
+import com.edcccd.blog.service.CategoryService;
 import com.edcccd.blog.service.ConfigService;
 import com.edcccd.blog.service.TagService;
 import com.edcccd.common.util.RedisUtil;
@@ -25,8 +26,8 @@ public class ConfigServiceImpl implements ConfigService {
     RedisUtil redisUtil;
     @Autowired
     ArticleService articleService;
-    // @Autowired
-    // categ articleService;
+     @Autowired
+    CategoryService categoryService;
     @Autowired
     TagService TagService;
 
@@ -44,8 +45,7 @@ public class ConfigServiceImpl implements ConfigService {
         info.setBlogName(mapper.getValue(BLOG_NAME));
         info.setComments(mapper.getValue(COMMENTS));
         info.setArticleCount(articleService.count());
-        // todo 回头加上
-        info.setCategoryCount(10L);
+        info.setCategoryCount(categoryService.count());
         info.setTagCount(TagService.count());
         info.setPageNotice(mapper.getValue(PAGE_NOTICE));
         info.setVisitCount(mapper.getValue(VISIT_COUNT));

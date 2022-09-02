@@ -13,6 +13,7 @@ import com.edcccd.blog.entity.Tag;
 import com.edcccd.blog.mapper.ArticleMapper;
 import com.edcccd.blog.service.ArticleBodyService;
 import com.edcccd.blog.service.ArticleService;
+import com.edcccd.blog.service.CategoryService;
 import com.edcccd.blog.util.PageUtils;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,8 @@ public class ArticleServiceImpl implements ArticleService {
     ArticleMapper mapper;
     @Resource
     ArticleBodyService bodyService;
+    @Resource
+    CategoryService categoryService;
     @Resource
     TagServiceImpl tagServiceImpl;
 
@@ -43,6 +46,24 @@ public class ArticleServiceImpl implements ArticleService {
         dtArticle.setTags(tags);
         dtArticle.setArticleBody(articleBody);
         return dtArticle;
+    }
+
+    @Override
+    public PageDTO<DtArticle> getByCategory(Long categoryId) {
+        Page<DtArticle> page = PageUtils.getPage(DtArticle.class);
+        mapper.getByCategory(page, categoryId);
+        PageDTO<DtArticle> pageDTO = new PageDTO<>(page.getCurrent(), page.getSize());
+        pageDTO.setRecords(page.getRecords());
+        return pageDTO;
+    }
+
+    @Override
+    public PageDTO<DtArticle> getByTag(Long tagId) {
+        Page<DtArticle> page = PageUtils.getPage(DtArticle.class);
+        mapper.getByTag(page, tagId);
+        PageDTO<DtArticle> pageDTO = new PageDTO<>(page.getCurrent(), page.getSize());
+        pageDTO.setRecords(page.getRecords());
+        return pageDTO;
     }
 
     @Override

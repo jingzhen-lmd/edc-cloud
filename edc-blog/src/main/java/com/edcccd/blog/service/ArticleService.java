@@ -19,9 +19,26 @@ public interface ArticleService {
     DtArticle getById(Long id);
 
     /**
+     * 通过fenlei
+     *
+     * @param categoryId fenlei
+     */
+    PageDTO<DtArticle> getByCategory(Long categoryId);
+
+    /**
+     * 通过fenlei
+     *
+     * @param tagId fenlei
+     */
+    PageDTO<DtArticle> getByTag(Long tagId);
+
+    /**
      * 分页查询
      */
     List<Article> list();
+
+    // 首页的分页查询
+    PageDTO<DtArticle> page();
 
     void save(DtArticle article);
 
@@ -40,8 +57,7 @@ public interface ArticleService {
     // 查询最新的轻量级文章
     List<DtArticleSmall> Latest(int num);
 
-    // 首页的分页查询
-    PageDTO<DtArticle> page();
+
 
 }
 

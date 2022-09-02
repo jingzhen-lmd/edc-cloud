@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edcccd.blog.mapper.CategoryMapper">
+  <resultMap id="BaseResultMap" type="com.edcccd.blog.entity.Category">
+    <!--@mbg.generated-->
+    <!--@Table category-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="power" jdbcType="VARCHAR" property="power" />
+    <result column="deleted" jdbcType="CHAR" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, create_time, `power`, deleted
+  </sql>
+
+
+  <select id="articleCount" resultType="com.edcccd.blog.dto.DtCategory">
+    select c.*, m.num articleNum
+    from category c
+             left join
+             (select category_id, count(article_id) num
+              from article_category ac
+              group by category_id) m
+                 on c.id = m.category_id ;
+  </select>
+
+
+</mapper>
