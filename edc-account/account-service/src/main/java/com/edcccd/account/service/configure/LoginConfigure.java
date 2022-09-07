@@ -43,7 +43,7 @@ public class LoginConfigure {
                 // .antMatchers("/hello").hasAuthority("visit:delete")
                 .antMatchers("/login", "/loginCaptcha", "/register", "/captcha/**").permitAll()
                 .antMatchers("/logout").authenticated()
-                .antMatchers("/check").permitAll()
+                .antMatchers("/account").permitAll()
                 .anyRequest().authenticated();
 
         // 禁用退出登录，使用自定义logout

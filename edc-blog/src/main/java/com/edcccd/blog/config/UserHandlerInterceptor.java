@@ -1,7 +1,11 @@
 package com.edcccd.blog.config;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.edcccd.blog.entity.User;
 import com.edcccd.blog.util.PageUtils;
+import com.edcccd.blog.util.UserThreadLocal;
 import com.mysql.cj.util.StringUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -13,22 +17,27 @@ import java.util.Optional;
 import static com.edcccd.blog.util.Constant.*;
 
 /**
- * 分页拦截器
- * 从前端请求中直接获取分页信息，分页查询时直接取出
+ * 用户拦截器
+ * 从请求中直接拿到用户数据，放到holder中备用
  */
 @Configuration
-public class PageHandlerInterceptor implements HandlerInterceptor {
+public class UserHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String currentPage = request.getParameter(CURRENT);
-        String pageSize = Optional.ofNullable(request.getParameter(SIZE)).orElse(DEFAULT_SIZE);
-        if (!StringUtils.isNullOrEmpty(currentPage)) {
-            PageUtils.setCurrentPage(new Page<>(Long.parseLong(currentPage), Long.parseLong(pageSize)));
-        }
-        return true;
-    }
+      String userJson = request.getParameter(USERINFO);
+      if (StringUtils.isNullOrEmpty(userJson)) {
+        return false;
+      }
 
+      User user = JSONUtil.toBean(userJson, User.class);
+      if (BeanUtil.isEmpty(user)) {
+        return false;
+      }
+
+      UserThreadLocal.setUser(user);
+      return true;
+    }
 
     /**
      * 删除
@@ -36,6 +45,6 @@ public class PageHandlerInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
                                 Exception ex) {
-        PageUtils.remove();
+        UserThreadLocal.remove();
     }
 }

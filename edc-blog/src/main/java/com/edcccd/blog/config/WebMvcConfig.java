@@ -14,6 +14,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        // 分页拦截器
         registry.addInterceptor(new PageHandlerInterceptor());
+        // 用户信息拦截器
+        registry.addInterceptor(new UserHandlerInterceptor());
     }
 }

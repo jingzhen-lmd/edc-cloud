@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.edcccd.blog.config.Constant.*;
+import static com.edcccd.blog.util.Constant.*;
 
 @Service
 public class ConfigServiceImpl implements ConfigService {

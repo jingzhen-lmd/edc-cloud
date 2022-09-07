@@ -3,7 +3,7 @@ package com.edcccd.blog.service.serviceimpl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
-import com.edcccd.blog.config.Model;
+import com.edcccd.blog.util.Model;
 import com.edcccd.blog.dto.DtTalk;
 import com.edcccd.blog.entity.Talk;
 import com.edcccd.blog.mapper.TalkMapper;
@@ -22,7 +22,7 @@ public class TalkServiceImpl implements TalkService {
     @Resource
     private TalkMapper mapper;
     @Resource
-    private StartServiceImpl startService;
+    private LikeServiceImpl startService;
 
     @Override
     public List<DtTalk> query(Long userId, Integer n) {

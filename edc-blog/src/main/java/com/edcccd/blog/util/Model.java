@@ -1,4 +1,4 @@
-package com.edcccd.blog.config;
+package com.edcccd.blog.util;
 
 import lombok.Getter;
 

@@ -1,19 +1,22 @@
 package com.edcccd.blog.service;
 
-import com.edcccd.blog.config.Model;
+import com.edcccd.blog.util.Model;
 
 /**
  * 点赞服务
+ * 用户点赞数据量大，单人修改频率低，要求安全性高，由消息队列执行，最终存放在数据库中
+ * 文章的点赞修改频率高，放在redis中即可。
+ *
  */
-public interface StartService {
+public interface LikeService {
 
     /**
      * 点赞，文章赞+1，点赞者集合添加文章id
      *
-     * @param prefix 前缀，一般为模块名
+     * @param model 前缀，一般为模块名
      * @param id     文章、说说的id
      */
-    void start(String prefix, String id);
+    void like(Model model, Long id);
 
     /**
      * 查询文章、说说、评论等点赞量

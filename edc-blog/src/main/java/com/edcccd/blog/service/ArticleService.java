@@ -58,6 +58,5 @@ public interface ArticleService {
     List<DtArticleSmall> Latest(int num);
 
 
-
 }
 

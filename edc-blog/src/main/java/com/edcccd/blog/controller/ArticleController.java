@@ -45,6 +45,15 @@ public class ArticleController {
     }
 
     /**
+     * 按类型进行分页查询
+     */
+    @GetMapping
+    public Result<PageDTO<DtArticle>> pageByCategory(Long categoryId) {
+        PageDTO<DtArticle> list = articleService.getByCategory(categoryId);
+        return Result.success(list);
+    }
+
+    /**
      * 查询最新的文章（文章详情页推荐）
      *
      * @param num 数量
