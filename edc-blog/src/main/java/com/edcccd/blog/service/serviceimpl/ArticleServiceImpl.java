@@ -41,10 +41,12 @@ public class ArticleServiceImpl implements ArticleService {
 
         List<Tag> tags = tagServiceImpl.queryByArticle(article.getId());
         ArticleBody articleBody = bodyService.getByArticleId(article.getId());
+        String category = categoryService.getByArticleId(article.getId());
 
         DtArticle dtArticle = new DtArticle(article);
         dtArticle.setTags(tags);
-        dtArticle.setArticleBody(articleBody);
+        dtArticle.setBody(articleBody.getTxt());
+        dtArticle.setCategory(category);
         return dtArticle;
     }
 

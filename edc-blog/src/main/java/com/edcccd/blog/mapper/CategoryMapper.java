@@ -7,10 +7,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface CategoryMapper extends BaseMapper<Category> {
 
-  List<DtCategory> articleCount();
+    List<DtCategory> articleCount();
+
+    @Select("select c.name from article_category a left join category c on c.id = a.category_id where a" +
+            ".article_id=#{articleId}")
+    String getByArticleId(Long articleId);
 }

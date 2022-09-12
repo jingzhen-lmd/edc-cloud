@@ -3,8 +3,6 @@ package com.edcccd.blog;
 import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
 import com.edcccd.blog.dto.DtArticle;
 import com.edcccd.blog.dto.DtCategory;
-import com.edcccd.blog.entity.Category;
-import com.edcccd.blog.mapper.CategoryMapper;
 import com.edcccd.blog.service.ArticleService;
 import com.edcccd.blog.service.CategoryService;
 import org.junit.jupiter.api.Test;
@@ -12,13 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
 public class MyTest {
@@ -53,7 +45,7 @@ public class MyTest {
 //        System.out.println(日记);
 
 
-        List<DtCategory> dtCategory = service.articleCount();
+        List<DtCategory> dtCategory = service.listArticleCount();
         System.out.println(dtCategory);
 
     }

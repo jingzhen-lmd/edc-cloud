@@ -25,7 +25,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result<String> register(User user) {
         check(user.getUserName());
         check(user.getPassword());
-        check(user.getPhone());
+        // check(user.getPhone());
 
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getPhone, user.getPhone());

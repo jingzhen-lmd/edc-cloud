@@ -2,11 +2,8 @@ package com.edcccd.account.service.controller;
 
 import com.edcccd.account.api.entity.User;
 import com.edcccd.account.service.service.serviceImpl.UserServiceImpl;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.edcccd.common.util.Result;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -41,10 +38,9 @@ public class UserController {
      * @param user 主键
      * @return 单条数据
      */
-    @PostMapping("create")
-    public boolean create(@RequestBody User user) {
-        // todo 待完善
-        return userServiceImpl.save(user);
+    @PostMapping("register")
+    public Result<String> register(@RequestBody User user) {
+        return userServiceImpl.register(user);
     }
 
 

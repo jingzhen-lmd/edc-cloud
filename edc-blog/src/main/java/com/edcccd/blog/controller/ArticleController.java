@@ -47,7 +47,7 @@ public class ArticleController {
     /**
      * 按类型进行分页查询
      */
-    @GetMapping
+    @GetMapping("category")
     public Result<PageDTO<DtArticle>> pageByCategory(Long categoryId) {
         PageDTO<DtArticle> list = articleService.getByCategory(categoryId);
         return Result.success(list);

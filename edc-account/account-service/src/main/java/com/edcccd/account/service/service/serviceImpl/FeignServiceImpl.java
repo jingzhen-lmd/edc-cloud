@@ -6,6 +6,7 @@ import com.edcccd.account.service.entity.UserDetail;
 import com.edcccd.account.service.service.FeignService;
 import com.edcccd.account.service.util.MyTokenUtil;
 import com.edcccd.common.util.RedisUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import javax.annotation.Resource;
 import static com.edcccd.account.api.common.Constain.LOGIN_USER;
 
 @Service
+@Slf4j
 public class FeignServiceImpl implements FeignService {
 
     @Resource
@@ -27,17 +29,20 @@ public class FeignServiceImpl implements FeignService {
         System.out.println("开始校验token" + token);
         String userId = tokenUtil.getUserIdFromToken(token);
         if (StrUtil.isBlank(userId)) {
-            throw new RuntimeException("token非法" + token);
+            log.warn("token非法" + token);
+            return false;
         }
 
         String userJson = redisUtil.getString(LOGIN_USER + userId);
         if (StrUtil.isBlank(userJson)) {
-            throw new RuntimeException("用户失效" + token);
+            log.warn("用户失效" + token);
+            return false;
         }
 
         UserDetail userDetail = JSONUtil.toBean(userJson, UserDetail.class);
         if (userDetail == null) {
-            throw new RuntimeException("用户json转换失败" + token);
+            log.warn("用户json转换失败" + token);
+            return false;
         }
         // 放入holder中
         UsernamePasswordAuthenticationToken authenticationToken =

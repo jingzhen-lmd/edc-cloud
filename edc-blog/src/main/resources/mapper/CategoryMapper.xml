@@ -17,7 +17,7 @@
 
 
   <select id="articleCount" resultType="com.edcccd.blog.dto.DtCategory">
-    select c.*, m.num articleNum
+    select c.*, m.num articleCount
     from category c
              left join
              (select category_id, count(article_id) num

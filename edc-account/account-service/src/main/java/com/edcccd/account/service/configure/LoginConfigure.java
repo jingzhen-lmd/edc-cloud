@@ -44,7 +44,8 @@ public class LoginConfigure {
                 .antMatchers("/login", "/loginCaptcha", "/register", "/captcha/**").permitAll()
                 .antMatchers("/logout").authenticated()
                 .antMatchers("/account").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/account/user/**").permitAll();
+                // .anyRequest().authenticated();
 
         // 禁用退出登录，使用自定义logout
         http.logout().disable();

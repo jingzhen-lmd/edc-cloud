@@ -2,7 +2,6 @@ package com.edcccd.blog.dto;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.edcccd.blog.entity.Article;
-import com.edcccd.blog.entity.ArticleBody;
 import com.edcccd.blog.entity.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,11 +20,6 @@ public class DtArticle {
     private Long id;
 
     /**
-     * 文章内容
-     */
-    private ArticleBody articleBody;
-
-    /**
      * 标题
      */
     private String title;
@@ -39,6 +33,11 @@ public class DtArticle {
      * 正文
      */
     private String body;
+
+    /**
+     * 分类
+     */
+    private String category;
 
     /**
      * 标签组

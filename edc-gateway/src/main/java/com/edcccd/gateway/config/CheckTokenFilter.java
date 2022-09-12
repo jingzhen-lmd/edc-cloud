@@ -2,6 +2,7 @@ package com.edcccd.gateway.config;
 
 import cn.hutool.core.util.StrUtil;
 import com.edcccd.gateway.entity.UserDetail;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.RequestPath;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.server.ServerWebExchange;
@@ -16,6 +17,7 @@ import java.util.Optional;
 /**
  * 静态资源的filter，按权限路由到对应路径
  */
+@Slf4j
 public class CheckTokenFilter implements WebFilter {
     /**
      * 前端模块的key值
@@ -76,6 +78,7 @@ public class CheckTokenFilter implements WebFilter {
                                 SEPARATOR + module + SEPARATOR + authority.get() + path.subPath(2))).build();
                 return chain.filter(build);
             } catch (Exception e) {
+                log.warn(e.getMessage());
                 // 没有权限跳转到普通页面
                 ServerWebExchange build = exchange.mutate()
                         .request(builder -> builder.path(
@@ -83,7 +86,7 @@ public class CheckTokenFilter implements WebFilter {
                 return chain.filter(build);
             }
         } catch (Exception e) {
-            // System.out.println("暂时不打印日志");
+            log.warn(e.getMessage());
             return chain.filter(exchange);
         }
     }

@@ -12,7 +12,6 @@ public class VipController {
 
     @GetMapping("ceshi")
     public String ceshi() {
-        // return "cover/456.jpg";
         return "adasdas";
     }
 

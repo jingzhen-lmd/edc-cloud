@@ -30,5 +30,5 @@ public class DtCategory {
   /**
    * 此分类下文章数量
    */
-  private Long articleNum;
+  private Long articleCount;
 }

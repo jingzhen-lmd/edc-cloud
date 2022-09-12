@@ -7,13 +7,20 @@ import java.util.List;
 
 public interface CategoryService {
 
-  Long count();
+    Long count();
 
-  List<DtCategory> articleCount();
+    List<DtCategory> listArticleCount();
 
-  List<Category> listAll();
+    List<Category> listAll();
 
-  boolean isExist(String categoryName);
+    boolean isExist(String categoryName);
 
-  void create(Category category);
+    void create(Category category);
+
+    /**
+     * 查询文章的分类
+     *
+     * @param articleId 主键
+     */
+    String getByArticleId(Long articleId);
 }

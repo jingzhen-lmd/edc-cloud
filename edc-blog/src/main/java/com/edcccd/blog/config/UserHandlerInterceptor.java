@@ -2,9 +2,7 @@ package com.edcccd.blog.config;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.edcccd.blog.entity.User;
-import com.edcccd.blog.util.PageUtils;
 import com.edcccd.blog.util.UserThreadLocal;
 import com.mysql.cj.util.StringUtils;
 import org.springframework.context.annotation.Configuration;
@@ -12,9 +10,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
-import static com.edcccd.blog.util.Constant.*;
+import static com.edcccd.blog.util.Constant.USERINFO;
 
 /**
  * 用户拦截器
@@ -27,12 +24,12 @@ public class UserHandlerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
       String userJson = request.getParameter(USERINFO);
       if (StringUtils.isNullOrEmpty(userJson)) {
-        return false;
+        return true;
       }
 
       User user = JSONUtil.toBean(userJson, User.class);
       if (BeanUtil.isEmpty(user)) {
-        return false;
+        return true;
       }
 
       UserThreadLocal.setUser(user);
