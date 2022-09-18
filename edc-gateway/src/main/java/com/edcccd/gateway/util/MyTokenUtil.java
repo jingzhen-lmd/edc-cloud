@@ -11,11 +11,13 @@ package com.edcccd.gateway.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class MyTokenUtil {
 
     //荷载中用户名
@@ -74,9 +76,7 @@ public class MyTokenUtil {
             Claims claims = getClaimFromToken(token);
             return claims.getId();
         } catch (Exception e) {
-            // todo 带修改
-            //        throw new RuntimeException("token获取id异常", e);
-            System.out.println("获取id异常");
+            log.warn("token获取id失败");
             return null;
         }
     }

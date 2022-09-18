@@ -5,6 +5,7 @@ import cn.hutool.json.JSONUtil;
 import com.edcccd.common.util.RedisUtil;
 import com.edcccd.gateway.entity.UserDetail;
 import com.edcccd.gateway.util.MyTokenUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -19,6 +20,7 @@ import static com.edcccd.account.api.common.Constain.LOGIN_USER;
 /**
  * 获取请求头中带过来的token值，解析并验证用户信息
  */
+@Slf4j
 public class JwtSecurityContextRepository implements ServerSecurityContextRepository {
 
     private MyTokenUtil tokenUtil = new MyTokenUtil();
@@ -55,18 +57,18 @@ public class JwtSecurityContextRepository implements ServerSecurityContextReposi
         // token能正常解析，表示token有效并对应数据库已知用户
         String userId = tokenUtil.getUserIdFromToken(token);
         if (StrUtil.isBlank(userId)) {
-            System.out.println("token非法");
+            log.warn("token非法");
             return Mono.empty();
         }
 
         String userJson = redisUtil.getString(LOGIN_USER + userId);
         if (StrUtil.isBlank(userJson)) {
-            System.out.println("用户失效");
+            log.warn("用户失效");
             return Mono.empty();
         }
         UserDetail userDetail = JSONUtil.toBean(userJson, UserDetail.class);
         if (userDetail == null) {
-            System.out.println("用户json转换失败");
+            log.warn("用户json转换失败");
             return Mono.empty();
         }
 

@@ -2,8 +2,6 @@ package com.edcccd.account.service.configure;
 
 import com.edcccd.common.util.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,24 +29,6 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 认证异常处理
-     */
-    @ExceptionHandler(value = AuthenticationException.class)
-    public Result<String> AuthenticationExceptionHandler(AuthenticationException e) {
-        String info = "登录失败：" + e.getMessage();
-        return Result.fail(401, info);
-    }
-
-    /**
-     * 用户权限异常处理
-     */
-    @ExceptionHandler(value = AccessDeniedException.class)
-    public Result<String> AuthenticationExceptionHandler(AccessDeniedException e) {
-        String info = "用户获取权限异常：" + e.getMessage();
-        return Result.fail(403, info);
-    }
-
-    /**
      * 全局异常处理
      * <p>
      * 设置处理的异常类型，如果没有特定异常则为最大的异常Exception.class
@@ -56,8 +36,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public Result<String> exceptionHandler(Exception e) {
-        Result<String> resultInfo = Result.fail(100, e.getMessage());
-        return resultInfo;
+        return Result.fail(100, e.getMessage());
     }
 }
 

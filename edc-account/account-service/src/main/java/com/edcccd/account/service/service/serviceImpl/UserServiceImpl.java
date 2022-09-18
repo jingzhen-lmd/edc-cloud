@@ -7,7 +7,6 @@ import com.edcccd.account.api.entity.User;
 import com.edcccd.account.service.mapper.UserMapper;
 import com.edcccd.account.service.service.UserService;
 import com.edcccd.common.util.Result;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,8 +17,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Resource
     UserMapper mapper;
-    @Resource
-    PasswordEncoder encoder;
 
     @Override
     public Result<String> register(User user) {
@@ -37,7 +34,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (isExist(user.getUserName())) {
             return Result.fail(500, "该用户名已经注册！");
         }
-        user.setPassword(encoder.encode(user.getPassword()));
         user.setCreateTime(new Date());
         user.setUpdateTime(new Date());
         mapper.insert(user);
