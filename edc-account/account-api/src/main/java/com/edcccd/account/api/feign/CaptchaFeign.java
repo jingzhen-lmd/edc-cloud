@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * 远程调用的验证码服务
  */
-@FeignClient("captcha")
+@FeignClient("account-service")
 public interface CaptchaFeign {
 
     /**
@@ -17,7 +17,7 @@ public interface CaptchaFeign {
      * @param key 验证码id
      * @return 验证码base64格式
      */
-    @GetMapping
+    @GetMapping("account/captcha")
     Result<String> getCaptcha(@RequestParam("key") String key);
 
 
@@ -27,7 +27,7 @@ public interface CaptchaFeign {
      * @param code 答案
      * @param key  验证码id
      */
-    @GetMapping("verify")
+    @GetMapping("account/captcha/verify")
     Result<Boolean> verifyCaptcha(@RequestParam("code") String code, @RequestParam("key") String key);
 
     /**
@@ -35,6 +35,6 @@ public interface CaptchaFeign {
      *
      * @param phone 电话号
      */
-    @GetMapping("phone")
+    @GetMapping("account/captcha/phone")
     Result<String> getCaptchaByPhone(@RequestParam("phone") String phone);
 }
