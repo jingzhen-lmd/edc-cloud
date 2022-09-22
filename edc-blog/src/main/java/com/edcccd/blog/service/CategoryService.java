@@ -23,4 +23,13 @@ public interface CategoryService {
      * @param articleId 主键
      */
     String getByArticleId(Long articleId);
+
+    /**
+     * 增加分类
+     */
+    void insert(Category category);
+    /**
+     * 修改分类
+     */
+    void updateById(Category category);
 }

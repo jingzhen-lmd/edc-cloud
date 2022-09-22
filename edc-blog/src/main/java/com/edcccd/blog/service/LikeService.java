@@ -15,8 +15,9 @@ public interface LikeService {
      *
      * @param model 前缀，一般为模块名
      * @param id     文章、说说的id
+     * @return 点赞数量
      */
-    void like(Model model, Long id);
+    Long like(Model model, Long id);
 
     /**
      * 查询文章、说说、评论等点赞量
@@ -25,5 +26,5 @@ public interface LikeService {
      * @param id    主键
      * @return 点赞数量
      */
-    Integer likeCount(Model model, Long id);
+    Long likeCount(Model model, Long id);
 }

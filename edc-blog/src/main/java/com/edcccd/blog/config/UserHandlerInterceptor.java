@@ -1,10 +1,8 @@
 package com.edcccd.blog.config;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
-import com.edcccd.blog.entity.User;
+import com.edcccd.blog.entity.UserDetail;
 import com.edcccd.blog.util.UserThreadLocal;
-import com.mysql.cj.util.StringUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -22,18 +20,13 @@ public class UserHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-      String userJson = request.getParameter(USERINFO);
-      if (StringUtils.isNullOrEmpty(userJson)) {
+        try {
+            String userJson = request.getHeader(USERINFO);
+            UserDetail userDetail = JSONUtil.toBean(userJson, UserDetail.class);
+            UserThreadLocal.setUser(userDetail);
+        } catch (Exception ignored) {
+        }
         return true;
-      }
-
-      User user = JSONUtil.toBean(userJson, User.class);
-      if (BeanUtil.isEmpty(user)) {
-        return true;
-      }
-
-      UserThreadLocal.setUser(user);
-      return true;
     }
 
     /**

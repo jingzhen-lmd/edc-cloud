@@ -50,4 +50,14 @@ public class CategoryServiceImpl implements CategoryService {
         return mapper.getByArticleId(articleId);
     }
 
+    @Override
+    public void insert(Category category) {
+        mapper.insert(category);
+    }
+
+    @Override
+    public void updateById(Category category) {
+        mapper.updateById(category);
+    }
+
 }

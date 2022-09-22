@@ -32,7 +32,7 @@ public class Constant {
     /**
      * 点赞量
      */
-    public static final String ENJOY_COUNT = "enjoy_count:";
+    public static final String ENJOY_COUNT = "blog:enjoy_count:";
     /**
      * 文章浏览量
      */

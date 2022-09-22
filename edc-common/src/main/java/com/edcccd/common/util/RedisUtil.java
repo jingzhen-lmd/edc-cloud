@@ -121,7 +121,7 @@ public class RedisUtil {
     /**
      * 对象缓存为map
      */
-    public void addMap(String pre, Object value,long timeout, final TimeUnit unit) {
+    public void addMap(String pre, Object value, long timeout, final TimeUnit unit) {
         if (StrUtil.isBlank(pre) || value == null)
             return;
 
@@ -215,6 +215,13 @@ public class RedisUtil {
         //        查到了，写缓存,返回
         template.opsForValue().set(key, JSONUtil.toJsonStr(apply), time, unit);
         return apply;
+    }
+
+    public Long decrement(String key) {
+        return template.opsForValue().decrement(key);
+    }
+    public Long increment(String key) {
+        return template.opsForValue().increment(key);
     }
 
     /**

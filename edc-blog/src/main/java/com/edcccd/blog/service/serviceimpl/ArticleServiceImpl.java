@@ -16,6 +16,7 @@ import com.edcccd.blog.service.ArticleService;
 import com.edcccd.blog.service.CategoryService;
 import com.edcccd.blog.util.PageUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -33,6 +34,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Resource
     TagServiceImpl tagServiceImpl;
 
+    @Transactional
     @Override
     public DtArticle getById(Long id) {
         Article article = mapper.selectById(id);

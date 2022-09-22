@@ -8,9 +8,10 @@
  */
 package com.edcccd.blog.controller;
 
-import com.edcccd.blog.util.Model;
 import com.edcccd.blog.service.LikeService;
+import com.edcccd.blog.util.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,15 +25,29 @@ import javax.annotation.Resource;
 @RequestMapping("like")
 public class LikeController {
 
-  @Resource
-  LikeService service;
+    @Resource
+    LikeService service;
 
-  /**
-   * 点赞
-   * @param model 模块
-   * @param id 主键
-   */
-  public void like(Model model, Long id) {
-    service.like(model,id);
-  }
+    /**
+     * 点赞
+     *
+     * @param model 模块
+     * @param id    主键
+     * @return 点赞数量
+     */
+    @GetMapping
+    public Long like(Model model, Long id) {
+        return service.like(model, id);
+    }
+
+    /**
+     * 查询文章、说说、评论等点赞量
+     *
+     * @param model 模块
+     * @param id    主键
+     * @return 点赞数量
+     */
+    Long likeCount(Model model, Long id) {
+        return service.like(model, id);
+    }
 }

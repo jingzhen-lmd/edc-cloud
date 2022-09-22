@@ -40,11 +40,11 @@ public class DtTalk {
     /**
      * 点赞量
      */
-    private Integer likeCount;
+    private Long likeCount;
     /**
      * 评论量
      */
-    private Integer commentCount;
+    private Long commentCount;
 
     private Long creatorId;
     private String creatorName;
