@@ -17,10 +17,6 @@ public class Constant {
      */
     public static final String DEFAULT_SIZE = "10";
 
-    /**
-     * 用户信息
-     */
-    public static final String USERINFO = "userInfo";
 
 
     /******************** redis缓存 *********************/

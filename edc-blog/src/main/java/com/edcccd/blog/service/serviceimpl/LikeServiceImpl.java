@@ -111,4 +111,16 @@ public class LikeServiceImpl implements LikeService {
         String likeCount = redisUtil.getString(ENJOY_COUNT + model + ":" + id);
         return StrUtil.isNotBlank(likeCount) ? Long.parseLong(likeCount) : 0;
     }
+
+    @Override
+    public List<Long> queryUserLike(Model model, Long userId) {
+        LambdaQueryWrapper<Enjoy> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Enjoy::getUserId, userId);
+        wrapper.eq(Enjoy::getModel, model.getCaption());
+
+        Enjoy enjoys = mapper.selectOne(wrapper);
+        DtEnjoy dtEnjoy = transEnjoy(enjoys);
+
+        return dtEnjoy.getEnjoyContents();
+    }
 }

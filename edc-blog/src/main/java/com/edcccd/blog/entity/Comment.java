@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.edcccd.blog.util.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +31,8 @@ public class Comment {
     /**
      * 对象的类型
      */
-    @TableField(value = "target_type")
-    private String targetType;
+    @TableField(value = "model")
+    private Model model;
 
     /**
      * 对象id
@@ -63,8 +64,8 @@ public class Comment {
     /**
      * 第几层
      */
-    @TableField(value = "rank")
-    private Integer rank;
+    @TableField(value = "layer")
+    private Integer layer;
 
     /**
      * 删除=1

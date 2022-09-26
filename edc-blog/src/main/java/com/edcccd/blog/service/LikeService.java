@@ -2,6 +2,8 @@ package com.edcccd.blog.service;
 
 import com.edcccd.blog.util.Model;
 
+import java.util.List;
+
 /**
  * 点赞服务
  * 用户点赞数据量大，单人修改频率低，要求安全性高，由消息队列执行，最终存放在数据库中
@@ -11,7 +13,8 @@ import com.edcccd.blog.util.Model;
 public interface LikeService {
 
     /**
-     * 点赞，文章赞+1，点赞者集合添加文章id
+     * 点赞
+     * 文章赞+1，点赞者集合添加文章id
      *
      * @param model 前缀，一般为模块名
      * @param id     文章、说说的id
@@ -27,4 +30,12 @@ public interface LikeService {
      * @return 点赞数量
      */
     Long likeCount(Model model, Long id);
+
+    /**
+     * 查询用户的喜欢列表
+     * @param model 模块名
+     * @param userId 用户id
+     * @return 喜欢列表
+     */
+    List<Long> queryUserLike(Model model, Long userId);
 }

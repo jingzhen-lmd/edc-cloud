@@ -14,4 +14,8 @@ public interface TalkService {
     void delete(Long talkId);
 
     void update(Long talkId);
+
+    DtTalk getById(Long id);
+
+    List<Long> likeList(Long userId );
 }

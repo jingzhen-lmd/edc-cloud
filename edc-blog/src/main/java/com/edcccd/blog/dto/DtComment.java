@@ -1,5 +1,6 @@
 package com.edcccd.blog.dto;
 
+import com.edcccd.blog.util.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,7 @@ public class DtComment {
     /**
      * 对象的类型
      */
-    private String targetType;
+    private Model model;
 
     private String targetId;
 
@@ -42,7 +43,7 @@ public class DtComment {
     /**
      * 第几层
      */
-    private Integer rank;
+    private Integer layer;
 
     private String deleted;
 

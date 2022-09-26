@@ -3,11 +3,12 @@ package com.edcccd.blog.service.serviceimpl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
-import com.edcccd.blog.util.Model;
 import com.edcccd.blog.dto.DtTalk;
 import com.edcccd.blog.entity.Talk;
 import com.edcccd.blog.mapper.TalkMapper;
+import com.edcccd.blog.service.LikeService;
 import com.edcccd.blog.service.TalkService;
+import com.edcccd.blog.util.Model;
 import com.edcccd.blog.util.PageUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,9 @@ public class TalkServiceImpl implements TalkService {
     private TalkMapper mapper;
     @Resource
     private LikeServiceImpl startService;
+
+    @Resource
+    LikeService likeService;
 
     @Override
     public List<DtTalk> query(Long userId, Integer n) {
@@ -73,5 +77,23 @@ public class TalkServiceImpl implements TalkService {
     public void update(Long talkId) {
         // todo 没实现
         throw new RuntimeException("功能为实现");
+    }
+
+    @Override
+    public DtTalk getById(Long id) {
+        Talk talk = mapper.selectById(id);
+        DtTalk dtTalk = new DtTalk(talk);
+
+        return dtTalk;
+    }
+
+    @Override
+    public List<Long> likeList(Long userId) {
+        if (userId == null) {
+            return new ArrayList<>();
+        }
+
+        List<Long> list = likeService.queryUserLike(Model.TALK, userId);
+        return list;
     }
 }

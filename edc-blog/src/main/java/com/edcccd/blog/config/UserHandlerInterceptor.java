@@ -9,7 +9,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.edcccd.blog.util.Constant.USERINFO;
+import static com.edcccd.common.util.Const.USERINFO;
+
 
 /**
  * 用户拦截器

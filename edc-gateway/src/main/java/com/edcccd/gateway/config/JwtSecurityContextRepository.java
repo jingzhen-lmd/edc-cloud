@@ -16,6 +16,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import static com.edcccd.account.api.common.Constain.LOGIN_USER;
+import static com.edcccd.common.util.Const.USERINFO;
 
 /**
  * 获取请求头中带过来的token值，解析并验证用户信息
@@ -77,6 +78,8 @@ public class JwtSecurityContextRepository implements ServerSecurityContextReposi
 
         // 放入holder中
         SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+        // 将用户信息放入请求头中
+        exchange.getRequest().mutate().header(USERINFO, JSONUtil.toJsonStr(userDetail)).build();
 
         // return new ReactiveAuthenticationManager() {
         //     @Override

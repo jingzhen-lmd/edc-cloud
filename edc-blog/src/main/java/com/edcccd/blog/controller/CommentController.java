@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.edcccd.blog.dto.DtComment;
 import com.edcccd.blog.entity.Comment;
 import com.edcccd.blog.service.CommentService;
+import com.edcccd.blog.util.Model;
 import com.edcccd.common.util.Result;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class CommentController {
     public Result<Long> count(String type, String targetId) {
         LambdaQueryWrapper<Comment> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Comment::getTargetId, targetId);
-        wrapper.eq(Comment::getTargetType, type);
+        wrapper.eq(Comment::getModel, type);
         wrapper.isNull(Comment::getPid);
         return Result.success(service.count(wrapper));
     }
@@ -46,8 +47,8 @@ public class CommentController {
      * @param targetId 对象id
      */
     @GetMapping("dtComments")
-    public Result<List<DtComment>> getByTargetId(Long targetId) {
-        List<DtComment> dtComments = service.getByTargetId(targetId);
+    public Result<List<DtComment>> getByTargetId(Model model, Long targetId) {
+        List<DtComment> dtComments = service.getByTargetId(model, targetId);
         return Result.success(dtComments);
     }
 
